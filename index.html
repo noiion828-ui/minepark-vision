@@ -751,8 +751,390 @@ body.unlocked #layer-indicator { opacity: 1; }
 }
 .rhythm-cell span { font-size: 13px; color: var(--text); }
 
-/* ============ LAYER 4: DEPTH (ENGINES) — FIXED ============ */
+/* ============ LAYER 4: VIRAL-KASKADE (NEW) ============ */
 #layer4 {
+  position: relative; z-index: 2;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(255,94,74,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(255,217,122,0.08) 0%, transparent 70%),
+    linear-gradient(180deg, var(--bg-deep) 0%, #0b0a14 50%, var(--bg-deep) 100%);
+  padding: 120px 20px 140px;
+}
+
+.show-hero {
+  max-width: 1100px; margin: 0 auto 90px;
+  padding: 50px 40px; text-align: center;
+  background:
+    radial-gradient(ellipse 90% 80% at 50% 30%, rgba(255,94,74,0.18) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(20,8,5,0.7) 0%, rgba(10,14,23,0.9) 100%);
+  border: 1px solid rgba(255,94,74,0.3);
+  border-radius: 24px; position: relative; overflow: hidden;
+}
+.show-hero::before {
+  content: '▶'; position: absolute; top: 32px; right: 40px;
+  font-size: 34px; color: #ff5e4a; opacity: 0.4;
+  animation: pulse-play 2s ease-in-out infinite;
+}
+@keyframes pulse-play {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.1); opacity: 0.6; }
+}
+.show-kicker {
+  font-size: 11px; letter-spacing: 0.4em; color: #ff8a6b;
+  text-transform: uppercase; margin-bottom: 14px; font-weight: 600;
+}
+.show-title {
+  font-size: clamp(48px, 7vw, 84px); font-weight: 100; letter-spacing: 0.02em;
+  background: linear-gradient(135deg, #ff5e4a 0%, var(--accent-warm) 50%, var(--gold) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin-bottom: 14px; line-height: 1;
+}
+.show-tagline {
+  font-size: clamp(16px, 2vw, 22px); color: var(--text); font-style: italic;
+  margin-bottom: 24px; font-weight: 300;
+}
+.show-hook {
+  font-size: 15px; color: var(--muted); max-width: 640px; margin: 0 auto 26px;
+}
+.show-meta-row {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin-top: 18px;
+}
+.show-chip {
+  background: rgba(255,94,74,0.1); color: #ff8a6b;
+  padding: 6px 14px; border-radius: 20px; font-size: 12px;
+  border: 1px solid rgba(255,94,74,0.25);
+}
+
+/* Weekly Pattern */
+.week-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 8px; max-width: 1100px; margin: 0 auto 70px;
+}
+.day-cell {
+  background: rgba(255,94,74,0.04);
+  border: 1px solid rgba(255,94,74,0.15);
+  padding: 18px 12px; border-radius: 12px; text-align: center;
+  transition: all 0.3s ease;
+}
+.day-cell:hover {
+  border-color: #ff5e4a; background: rgba(255,94,74,0.08);
+  transform: translateY(-3px);
+}
+.day-abbr {
+  font-size: 24px; font-weight: 200; color: #ff8a6b;
+  margin-bottom: 2px;
+}
+.day-full {
+  font-size: 9px; letter-spacing: 0.15em; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 14px;
+}
+.day-what { font-size: 12px; color: var(--text); }
+
+/* Content Pillars */
+.pillars-grid {
+  display: grid; gap: 14px; max-width: 1100px; margin: 0 auto 70px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.pillar-card {
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(255,217,122,0.15);
+  padding: 20px 18px; border-radius: 14px;
+  animation: rise 0.6s ease both; animation-delay: calc(var(--i) * 0.08s);
+}
+.pillar-name { font-size: 15px; font-weight: 500; color: var(--accent-warm); margin-bottom: 4px; }
+.pillar-format { font-size: 10px; letter-spacing: 0.1em; color: #ff8a6b; text-transform: uppercase; margin-bottom: 14px; }
+.pillar-time {
+  display: inline-block; padding: 3px 10px;
+  background: rgba(255,94,74,0.15); color: #ff8a6b;
+  border-radius: 20px; font-size: 11px; margin-bottom: 12px;
+}
+.pillar-purpose { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* Signature Moments */
+.moments-list {
+  max-width: 900px; margin: 0 auto 70px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 10px;
+}
+.moment-item {
+  display: flex; align-items: start; gap: 14px;
+  padding: 12px 16px; background: rgba(255,94,74,0.04);
+  border-left: 2px solid #ff5e4a; border-radius: 0 10px 10px 0;
+  animation: slideIn 0.5s ease both; animation-delay: calc(var(--i) * 0.07s);
+}
+.moment-num {
+  color: #ff8a6b; font-family: monospace; font-size: 12px;
+  font-weight: 700; flex-shrink: 0; padding-top: 3px;
+}
+.moment-item span:last-child { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+/* Signature Formats */
+.formats-grid {
+  display: grid; gap: 14px; max-width: 1100px; margin: 0 auto 70px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.format-card {
+  background: linear-gradient(135deg, rgba(255,94,74,0.06) 0%, rgba(255,217,122,0.04) 100%);
+  border: 1px solid rgba(255,94,74,0.2);
+  padding: 20px 18px; border-radius: 14px;
+  transition: all 0.3s ease;
+  animation: rise 0.6s ease both; animation-delay: calc(var(--i) * 0.06s);
+}
+.format-card:hover {
+  transform: translateY(-4px);
+  border-color: #ff5e4a;
+  box-shadow: 0 12px 40px rgba(255,94,74,0.15);
+}
+.format-name { font-size: 16px; font-weight: 500; color: var(--accent-warm); margin-bottom: 4px; }
+.format-plat { font-size: 10px; letter-spacing: 0.1em; color: #ff8a6b; text-transform: uppercase; margin-bottom: 12px; }
+.viral-meter {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.viral-fill {
+  height: 6px; background: linear-gradient(90deg, #ff5e4a 0%, #ffd97a 100%);
+  border-radius: 4px; flex: 1;
+}
+.viral-meter span { font-size: 11px; color: var(--muted); font-family: monospace; }
+.format-hook { font-size: 12px; color: var(--text); line-height: 1.5; }
+
+/* Platform Stack */
+.platform-list {
+  max-width: 1000px; margin: 0 auto 70px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.platform-row {
+  display: grid; grid-template-columns: 200px 1fr auto auto;
+  gap: 20px; align-items: center;
+  padding: 18px 24px; background: rgba(0,0,0,0.25);
+  border-left: 3px solid #ff5e4a; border-radius: 0 14px 14px 0;
+  animation: slideIn 0.6s ease both; animation-delay: calc(var(--i) * 0.1s);
+}
+.plat-name { font-size: 15px; font-weight: 500; color: var(--accent-warm); }
+.plat-role { font-size: 12px; color: var(--muted); }
+.plat-stats { display: flex; gap: 18px; }
+.plat-stats div { text-align: right; }
+.plat-stats span { display: block; font-size: 9px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+.plat-stats strong { font-size: 13px; color: var(--accent-warm); font-weight: 500; }
+.plat-freq { font-size: 11px; color: #ff8a6b; max-width: 180px; }
+
+/* Y1 Projected */
+.y1-grid {
+  display: grid; gap: 12px; max-width: 1100px; margin: 0 auto 70px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.y1-card {
+  background: linear-gradient(135deg, rgba(255,94,74,0.08) 0%, rgba(212,175,55,0.05) 100%);
+  border: 1px solid rgba(255,94,74,0.25);
+  padding: 22px 20px; border-radius: 14px;
+}
+.y1-label { font-size: 10px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+.y1-val { font-size: 16px; color: var(--accent-warm); font-weight: 400; line-height: 1.3; }
+
+/* Viral Drivers */
+.drivers-list {
+  max-width: 900px; margin: 0 auto 70px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.driver-row {
+  display: grid; grid-template-columns: 60px 1fr; gap: 18px; align-items: start;
+  padding: 16px 20px; background: rgba(0,0,0,0.25);
+  border-radius: 12px;
+  animation: slideIn 0.5s ease both; animation-delay: calc(var(--i) * 0.06s);
+}
+.driver-weight {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: conic-gradient(#ff5e4a calc(var(--w, 5) * 36deg), rgba(255,255,255,0.08) 0);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--accent-warm); font-size: 16px;
+  position: relative;
+}
+.driver-weight[data-w="10"] { background: conic-gradient(#ff5e4a 360deg, rgba(255,255,255,0.08) 0); }
+.driver-weight[data-w="9"] { background: conic-gradient(#ff5e4a 324deg, rgba(255,255,255,0.08) 0); }
+.driver-weight[data-w="8"] { background: conic-gradient(#ff5e4a 288deg, rgba(255,255,255,0.08) 0); }
+.driver-weight[data-w="7"] { background: conic-gradient(#ff5e4a 252deg, rgba(255,255,255,0.08) 0); }
+.driver-weight::after {
+  content: ''; position: absolute; inset: 4px;
+  background: var(--bg-deep); border-radius: 50%; z-index: -1;
+}
+.driver-weight { position: relative; }
+.driver-text { font-size: 14px; color: var(--text); margin-bottom: 4px; }
+.driver-precedent { font-size: 11px; color: var(--muted); font-style: italic; }
+
+/* Top 5 Viral Moments */
+.vmoments-wrap {
+  max-width: 900px; margin: 0 auto 70px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.vmoment {
+  display: grid; grid-template-columns: 50px 1fr; gap: 20px; align-items: start;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, rgba(255,94,74,0.06) 0%, rgba(0,217,255,0.03) 100%);
+  border: 1px solid rgba(255,94,74,0.2); border-radius: 14px;
+}
+.vmoment-num {
+  font-size: 34px; font-weight: 100; color: #ff5e4a;
+  line-height: 1; font-family: serif;
+}
+.vmoment p { font-size: 14px; color: var(--text); line-height: 1.6; }
+
+/* Failure Modes */
+.failure-list {
+  max-width: 900px; margin: 0 auto 70px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.failure-row {
+  display: grid; grid-template-columns: 90px 1fr; gap: 20px; align-items: start;
+  padding: 16px 22px; background: rgba(255,107,107,0.04);
+  border: 1px solid rgba(255,107,107,0.15); border-radius: 12px;
+}
+.failure-pct {
+  font-size: 22px; font-weight: 200; color: #ff8a6b;
+  font-family: monospace;
+}
+.failure-mode { font-size: 14px; color: var(--text); margin-bottom: 4px; }
+.failure-mit { font-size: 12px; color: var(--muted); }
+
+/* Uniqueness Hero */
+.uniq-hero {
+  max-width: 900px; margin: 0 auto 70px;
+  padding: 50px 40px; text-align: center;
+  background:
+    radial-gradient(ellipse at center, rgba(255,94,74,0.1) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(10,14,23,0.8) 0%, rgba(20,8,5,0.5) 100%);
+  border: 1px solid rgba(255,94,74,0.3); border-radius: 20px;
+}
+.uniq-score-ring {
+  width: 180px; height: 180px; margin: 0 auto 24px; position: relative;
+  background: conic-gradient(#ff5e4a calc(var(--score) * 3.6deg), rgba(255,255,255,0.05) 0);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  animation: ringReveal 1.5s ease-out;
+}
+.uniq-score-ring::before {
+  content: ''; position: absolute; inset: 10px;
+  background: var(--bg-deep); border-radius: 50%;
+}
+.uniq-score-inner {
+  position: relative; z-index: 1; text-align: center;
+}
+.uniq-score-num {
+  font-size: 64px; font-weight: 100; line-height: 1;
+  background: linear-gradient(135deg, #ff5e4a 0%, var(--accent-warm) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.uniq-score-max { font-size: 12px; color: var(--muted); letter-spacing: 0.2em; }
+@keyframes ringReveal {
+  from { transform: rotate(-90deg) scale(0.8); opacity: 0; }
+  to { transform: rotate(0) scale(1); opacity: 1; }
+}
+.uniq-label { font-size: 11px; letter-spacing: 0.3em; color: var(--muted); margin-bottom: 14px; text-transform: uppercase; }
+.uniq-factors { font-size: 14px; color: var(--text); max-width: 640px; margin: 14px auto; line-height: 1.6; }
+.uniq-defense {
+  font-size: 12px; color: #ff8a6b; font-style: italic;
+  padding-top: 16px; border-top: 1px solid rgba(255,94,74,0.2);
+  max-width: 640px; margin: 16px auto 0;
+}
+
+/* Economic Value Rows */
+.econ-stack {
+  max-width: 700px; margin: 0 auto 70px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.econ-row {
+  display: grid; grid-template-columns: 80px 1fr; gap: 20px;
+  padding: 18px 24px; background: rgba(0,0,0,0.3);
+  border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+  align-items: center;
+}
+.econ-row.enterprise {
+  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(255,94,74,0.06) 100%);
+  border-left-color: #ff5e4a;
+}
+.econ-year {
+  font-size: 20px; font-weight: 200; color: var(--gold);
+  font-family: monospace;
+}
+.econ-row.enterprise .econ-year { color: #ff8a6b; font-size: 12px; }
+.econ-val { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+/* Partners */
+.partners-section { max-width: 1100px; margin: 0 auto 50px; }
+.partners-title {
+  font-size: 13px; letter-spacing: 0.25em; color: #ff8a6b;
+  text-transform: uppercase; margin-bottom: 20px; padding-left: 4px;
+}
+.partners-grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-bottom: 40px;
+}
+.partner-card {
+  background: rgba(0,0,0,0.25); border: 1px solid rgba(255,217,122,0.15);
+  padding: 20px 18px; border-radius: 14px;
+  transition: all 0.3s ease;
+}
+.partner-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-warm);
+}
+.partner-card.creator { border-left: 3px solid #ff5e4a; }
+.partner-card.network { border-left: 3px solid var(--accent); }
+.partner-card.brand { border-left: 3px solid var(--gold); }
+.partner-name { font-size: 15px; font-weight: 500; color: var(--accent-warm); margin-bottom: 6px; }
+.partner-stat { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 10px; }
+.partner-cat { font-size: 11px; color: #ff8a6b; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.partner-ask { font-size: 12px; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+.partner-fee {
+  font-size: 11px; color: var(--gold-bright); font-weight: 500;
+  padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06);
+  line-height: 1.4;
+}
+
+/* CAC/LTV box */
+.cac-ltv {
+  max-width: 900px; margin: 0 auto 60px;
+  padding: 30px 32px;
+  background: linear-gradient(135deg, rgba(0,217,255,0.05) 0%, rgba(212,175,55,0.05) 100%);
+  border: 1px solid rgba(0,217,255,0.18); border-radius: 18px;
+}
+.cac-ltv h3 { font-size: 14px; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 18px; text-transform: uppercase; }
+.cac-ltv-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 20px;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  align-items: center;
+}
+.cac-ltv-row:last-of-type { border-bottom: none; }
+.cac-ltv-key { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; }
+.cac-ltv-val { font-size: 14px; color: var(--accent-warm); font-weight: 500; text-align: right; }
+.reality-check {
+  margin-top: 20px; padding: 16px 20px;
+  background: rgba(255,107,107,0.05); border-left: 2px solid #ff8a6b;
+  border-radius: 0 10px 10px 0;
+  font-size: 12px; color: var(--text); line-height: 1.6;
+}
+.reality-check strong { color: #ff8a6b; }
+
+/* Blunt Verdict */
+.blunt-verdict {
+  max-width: 900px; margin: 80px auto 0;
+  padding: 40px 40px;
+  background:
+    radial-gradient(ellipse at center, rgba(255,94,74,0.12) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(10,14,23,0.9) 0%, rgba(20,8,5,0.7) 100%);
+  border: 1px solid rgba(255,94,74,0.3); border-radius: 20px;
+  text-align: center; font-size: 17px; font-weight: 300;
+  color: var(--text); line-height: 1.7; font-style: italic;
+  position: relative;
+}
+.blunt-verdict::before {
+  content: '❝'; position: absolute; top: -12px; left: 30px;
+  font-size: 70px; color: #ff5e4a; opacity: 0.3;
+}
+
+/* ============ LAYER 5: DEPTH (ENGINES) — FIXED ============ */
+#layer5 {
   position: relative; z-index: 2;
   background: var(--bg-deep);
   padding: 120px 20px 80px;
@@ -867,7 +1249,8 @@ body.unlocked .depth-switch { opacity: 1; }
   <div class="li-dot active" data-target="layer1"><span class="li-label">Signal</span></div>
   <div class="li-dot" data-target="layer2"><span class="li-label">Struktur</span></div>
   <div class="li-dot" data-target="layer3"><span class="li-label">Atmosphäre</span></div>
-  <div class="li-dot" data-target="layer4"><span class="li-label">Tiefe</span></div>
+  <div class="li-dot" data-target="layer4"><span class="li-label">Viral-Kaskade</span></div>
+  <div class="li-dot" data-target="layer5"><span class="li-label">Tiefe</span></div>
 </div>
 
 <!-- DEPTH SWITCH -->
@@ -875,7 +1258,8 @@ body.unlocked .depth-switch { opacity: 1; }
   <button class="depth-btn active" data-target="layer1">1 · Signal</button>
   <button class="depth-btn" data-target="layer2">2 · Struktur</button>
   <button class="depth-btn" data-target="layer3">3 · Atmosphäre</button>
-  <button class="depth-btn" data-target="layer4">4 · Tiefe</button>
+  <button class="depth-btn" data-target="layer4">4 · Viral</button>
+  <button class="depth-btn" data-target="layer5">5 · Tiefe</button>
 </div>
 
 <!-- LAYER 1: SIGNAL -->
@@ -1410,9 +1794,540 @@ body.unlocked .depth-switch { opacity: 1; }
   </div>
 </section>
 
-<!-- LAYER 4: TIEFE (FULL ENGINE ANALYSIS) -->
+<!-- LAYER 4: VIRAL-KASKADE (NEW) -->
 <section id="layer4">
-  <div class="layer-label">Schicht 04 · Tiefe</div>
+  <div class="layer-label">Schicht 04 · Viral-Kaskade</div>
+  <h2 class="layer-title">Wie daraus ein <strong>Weltphänomen</strong> wird</h2>
+
+  <!-- SHOW HERO -->
+  <div class="show-hero">
+    <div class="show-kicker">▶ Reality-Serie · Original IP</div>
+    <h1 class="show-title">Healed Gold</h1>
+    <p class="show-tagline">„Schürfe dein Glück, heile die Erde, behalte was du findest"</p>
+    <p class="show-hook">Fremde graben nach Diamanten in heilender Erde. Jeder Fund gehört ihnen. Nicht alle finden Gold.</p>
+    <div class="show-meta-row">
+      <span class="show-chip">Gold Rush</span><span class="show-chip">Alone</span><span class="show-chip">The Retreat</span><span class="show-chip">Queer Eye</span><span class="show-chip">Expedition Unknown</span>
+      <span class="show-chip">◉ 8 Folgen × 45 Min</span>
+      <span class="show-chip">◆ Netflix-Drop Folge 1-3, dann Weekly — Binge-Hook + Social-Momentum-Build über 5 </span>
+    </div>
+  </div>
+
+  <!-- WEEKLY PATTERN -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">01 · Produktions-Rhythmus</div>
+      <div class="subsection-title">Was an <strong>welchem Tag</strong> gefilmt wird</div>
+    </div>
+    <div class="week-grid"><div class="day-cell"><div class="day-abbr">Mo</div><div class="day-full">Montag</div><div class="day-what">Ankünfte filmen</div></div><div class="day-cell"><div class="day-abbr">Di</div><div class="day-full">Dienstag</div><div class="day-what">Schürf-Action</div></div><div class="day-cell"><div class="day-abbr">Mi</div><div class="day-full">Mittwoch</div><div class="day-what">Skill-Workshops</div></div><div class="day-cell"><div class="day-abbr">Do</div><div class="day-full">Donnerstag</div><div class="day-what">Schürf-Action</div></div><div class="day-cell"><div class="day-abbr">Fr</div><div class="day-full">Freitag</div><div class="day-what">Rituale + Funde</div></div><div class="day-cell"><div class="day-abbr">Sa</div><div class="day-full">Samstag</div><div class="day-what">Community-Events</div></div><div class="day-cell"><div class="day-abbr">So</div><div class="day-full">Sonntag</div><div class="day-what">Stille/Edit</div></div></div>
+  </div>
+
+  <!-- CONTENT PILLARS -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">02 · Content-Säulen · Täglich</div>
+      <div class="subsection-title">Die <strong>6 Content-Streams</strong> jeden Tag</div>
+    </div>
+    <div class="pillars-grid">
+    <div class="pillar-card" style="--i: 0">
+      <div class="pillar-name">Fund-Alerts</div>
+      <div class="pillar-format">Shorts · TikTok/Insta</div>
+      <div class="pillar-time">3 min/Tag</div>
+      <div class="pillar-purpose">Dopamin-Loop jeder Echtzeit-Fund</div>
+    </div>
+    
+    <div class="pillar-card" style="--i: 1">
+      <div class="pillar-name">Meister-Weisheit</div>
+      <div class="pillar-format">Shorts · YouTube</div>
+      <div class="pillar-time">2 min/Tag</div>
+      <div class="pillar-purpose">spirituelle Tiefe snackable</div>
+    </div>
+    
+    <div class="pillar-card" style="--i: 2">
+      <div class="pillar-name">Schürf-Cam</div>
+      <div class="pillar-format">Live · Twitch</div>
+      <div class="pillar-time">120 min/Tag</div>
+      <div class="pillar-purpose">parasoziale Bindung + FOMO</div>
+    </div>
+    
+    <div class="pillar-card" style="--i: 3">
+      <div class="pillar-name">Vor/Nach-Porträts</div>
+      <div class="pillar-format">Long · YouTube</div>
+      <div class="pillar-time">8 min/Tag</div>
+      <div class="pillar-purpose">emotionale Transformation zeigen</div>
+    </div>
+    
+    <div class="pillar-card" style="--i: 4">
+      <div class="pillar-name">Ökologie-Tracker</div>
+      <div class="pillar-format">Shorts · Instagram</div>
+      <div class="pillar-time">2 min/Tag</div>
+      <div class="pillar-purpose">Impact sichtbar machen</div>
+    </div>
+    
+    <div class="pillar-card" style="--i: 5">
+      <div class="pillar-name">Behind-Gold</div>
+      <div class="pillar-format">Long · Patreon</div>
+      <div class="pillar-time">12 min/Tag</div>
+      <div class="pillar-purpose">Superfans Zugang geben</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- SIGNATURE MOMENTS -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">03 · Signature Moments</div>
+      <div class="subsection-title">Die <strong>8 Ikonen</strong> der Show</div>
+    </div>
+    <div class="moments-list"><div class="moment-item" style="--i: 0"><span class="moment-num">01</span><span>Der Schrei — Zeitlupe wenn jemand Gold findet, Gesicht nah</span></div><div class="moment-item" style="--i: 1"><span class="moment-num">02</span><span>Dunkelkammer-Beichte — Flüster-Confessionals in totaler Finsternis</span></div><div class="moment-item" style="--i: 2"><span class="moment-num">03</span><span>Feuer-Ring-Kreis — alle zeigen ihre Funde, Stille vor Enthüllung</span></div><div class="moment-item" style="--i: 3"><span class="moment-num">04</span><span>Meister-Blick — Goldmeister bewertet Fund nonverbal, Kamera auf Augen</span></div><div class="moment-item" style="--i: 4"><span class="moment-num">05</span><span>Ersten-Spatenstich — Ritual wenn neuer Gast erstmals gräbt</span></div><div class="moment-item" style="--i: 5"><span class="moment-num">06</span><span>Abschiedsglocke — Gast läutet wenn er geht, Echo über Landschaft</span></div><div class="moment-item" style="--i: 6"><span class="moment-num">07</span><span>Gewinn-Ticker — animierte Grafik zeigt Community-Anteil steigen</span></div><div class="moment-item" style="--i: 7"><span class="moment-num">08</span><span>Erde-durch-Finger — Makro-Shot rekultivierte Erde rinnt durch Hände</span></div></div>
+  </div>
+
+  <!-- SIGNATURE FORMATS -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">04 · Content-Formate mit Viral-Score</div>
+      <div class="subsection-title">Was <strong>tatsächlich klickt</strong></div>
+    </div>
+    <div class="formats-grid">
+    <div class="format-card" style="--i: 0; --viral: 9">
+      <div class="format-name">Gold Rush Roulette</div>
+      <div class="format-plat">TikTok Live + Twitch · 2x/Wo</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 90%"></div><span>9/10</span></div>
+      <div class="format-hook">Live-Schürfen, Chat wählt wo gegraben wird, Echtzeit-Fund-Reaktionen, Gewinner teilt 10% Fund-Wert</div>
+    </div>
+    
+    <div class="format-card" style="--i: 1; --viral: 7">
+      <div class="format-name">The 3AM Mine Diaries</div>
+      <div class="format-plat">YouTube Main · 1x/Mo</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 70%"></div><span>7/10</span></div>
+      <div class="format-hook">Nacht-Schicht-Cinematics, philosophische Voiceover zu Gier/Heilung/Erde, ASMR-Mining-Sounds, keine Musik</div>
+    </div>
+    
+    <div class="format-card" style="--i: 2; --viral: 8">
+      <div class="format-name">Find of the Week</div>
+      <div class="format-plat">Instagram Reels + TikTok · 1x/Wo</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 80%"></div><span>8/10</span></div>
+      <div class="format-hook">10sec-Reveal größter Wochenfund, Slow-Mo-Extraction, Wert-Estimate-Text-Overlay, Finder-Freude-Reaktion</div>
+    </div>
+    
+    <div class="format-card" style="--i: 3; --viral: 6">
+      <div class="format-name">Healed vs. Blood</div>
+      <div class="format-plat">YouTube Deep-Dive · 1x/Quartal</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 60%"></div><span>6/10</span></div>
+      <div class="format-hook">Side-by-Side-Vergleich konfliktfreier vs. traditioneller Abbau, Interviews mit Opfern, forensische Mineral-Analyse</div>
+    </div>
+    
+    <div class="format-card" style="--i: 4; --viral: 9">
+      <div class="format-name">The Claim</div>
+      <div class="format-plat">YouTube Series (8 Episodes/Season) · 1 Season/Jahr</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 90%"></div><span>9/10</span></div>
+      <div class="format-hook">Reality-Format: 8 Visitors konkurrieren um wertvollsten Fund, Drama + Ethik + Skill-Building, Survivor-meets-Gold-Rush</div>
+    </div>
+    
+    <div class="format-card" style="--i: 5; --viral: 5">
+      <div class="format-name">Mine Meditations</div>
+      <div class="format-plat">Podcast + YouTube Audio · 2x/Mo</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 50%"></div><span>5/10</span></div>
+      <div class="format-hook">15min Guided-Meditation mit Mine-Ambient-Sounds, Themen: Gier loslassen, Erdverbindung, Wert vs. Wertschätzung</div>
+    </div>
+    
+    <div class="format-card" style="--i: 6; --viral: 7">
+      <div class="format-name">Geology Breakdown</div>
+      <div class="format-plat">YouTube Shorts + TikTok · 3x/Wo</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 70%"></div><span>7/10</span></div>
+      <div class="format-hook">60sec Gestein-Identifikation, &#x27;This rock is 2 billion years old and here&#x27;s why that matters&#x27;, Edu-tainment, Text-heavy</div>
+    </div>
+    
+    <div class="format-card" style="--i: 7; --viral: 6">
+      <div class="format-name">Token Town Hall</div>
+      <div class="format-plat">Twitch + YouTube Live · 1x/Mo</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 60%"></div><span>6/10</span></div>
+      <div class="format-hook">DAO-Holder entscheiden live über Mine-Entscheidungen (neue Architektur, Profit-Split, Expansions), Transparenz-Porn</div>
+    </div>
+    
+    <div class="format-card" style="--i: 8; --viral: 7">
+      <div class="format-name">Jeweler&#x27;s Journey</div>
+      <div class="format-plat">YouTube Main · 1x/Quartal</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 70%"></div><span>7/10</span></div>
+      <div class="format-hook">Folge Healed-Gold vom Schürf-Moment bis Chopard-Ring, Interview mit Kunsthandwerkern, Premium-Pricing-Begründung</div>
+    </div>
+    
+    <div class="format-card" style="--i: 9; --viral: 8">
+      <div class="format-name">Before/After Earth</div>
+      <div class="format-plat">Instagram Feed + Reels · 1x/Mo</div>
+      <div class="viral-meter"><div class="viral-fill" style="width: 80%"></div><span>8/10</span></div>
+      <div class="format-hook">Split-Screen oder Swipe: Minen-Narbe vor Projekt vs. heute (Wald/Teich/Leben), Zeitraffer-Rekultivierung, Hope-Dopamin</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- PLATFORM STACK -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">05 · Distribution-Stack</div>
+      <div class="subsection-title">Wo die <strong>Reichweite</strong> herkommt</div>
+    </div>
+    <div class="platform-list">
+    <div class="platform-row" style="--i: 0">
+      <div class="plat-name">YouTube Main</div>
+      <div class="plat-role">Haupt-Umsatz + Langform-Storytelling + SEO-Autorität</div>
+      <div class="plat-stats">
+        <div><span>Views</span><strong>800k-4.2M pro Episode nach Monat 9</strong></div>
+        <div><span>Kosten/Mo</span><strong>€72.000</strong></div>
+      </div>
+      <div class="plat-freq">1 Episode/Wo + 3 Deep-Dive/Mo</div>
+    </div>
+    
+    <div class="platform-row" style="--i: 1">
+      <div class="plat-name">YouTube Shorts</div>
+      <div class="plat-role">Discovery-Engine + Algo-Fuel für Main-Channel</div>
+      <div class="plat-stats">
+        <div><span>Views</span><strong>120k-2.8M pro Short. 8-15% CTR zu Main</strong></div>
+        <div><span>Kosten/Mo</span><strong>€8.500</strong></div>
+      </div>
+      <div class="plat-freq">5-7 Shorts/Wo (260-350/Jahr)</div>
+    </div>
+    
+    <div class="platform-row" style="--i: 2">
+      <div class="plat-name">TikTok</div>
+      <div class="plat-role">Gen-Z/Millennial Awareness + Viral-Lottery</div>
+      <div class="plat-stats">
+        <div><span>Views</span><strong>80k-5M. 2-4 virale Hits (10M+) pro Jahr erwartet</strong></div>
+        <div><span>Kosten/Mo</span><strong>€6.800</strong></div>
+      </div>
+      <div class="plat-freq">4-6 Posts/Wo (220-280/Jahr)</div>
+    </div>
+    
+    <div class="platform-row" style="--i: 3">
+      <div class="plat-name">Instagram</div>
+      <div class="plat-role">Lifestyle-Ästhetik + Luxury-Audience + Community-Hub</div>
+      <div class="plat-stats">
+        <div><span>Views</span><strong>Reels 200k-1.8M. Feed 80k-400k Reach</strong></div>
+        <div><span>Kosten/Mo</span><strong>€9.200</strong></div>
+      </div>
+      <div class="plat-freq">3 Reels/Wo + 4 Feed-Posts/Wo + Daily Stories</div>
+    </div>
+    
+    <div class="platform-row" style="--i: 4">
+      <div class="plat-name">Twitch</div>
+      <div class="plat-role">Live-Schürf-Events + Community-Intimität + Echtzeit-Partizipation</div>
+      <div class="plat-stats">
+        <div><span>Views</span><strong>2k-12k concurrent nach Monat 6</strong></div>
+        <div><span>Kosten/Mo</span><strong>€11.500</strong></div>
+      </div>
+      <div class="plat-freq">2x 3h-Streams/Wo (300h/Jahr)</div>
+    </div>
+    
+    <div class="platform-row" style="--i: 5">
+      <div class="plat-name">Podcast (Spotify/Apple)</div>
+      <div class="plat-role">Thought-Leadership + Long-Tail-SEO + Commute-Content</div>
+      <div class="plat-stats">
+        <div><span>Views</span><strong>8k-35k Downloads pro Episode nach Jahr 1</strong></div>
+        <div><span>Kosten/Mo</span><strong>€4.200</strong></div>
+      </div>
+      <div class="plat-freq">1 Episode/Wo (50/Jahr)</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Y1 PROJECTED NUMBERS -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">06 · Jahr 1 — realistisch projiziert</div>
+      <div class="subsection-title">Die <strong>erwarteten Zahlen</strong></div>
+    </div>
+    <div class="y1-grid"><div class="y1-card"><div class="y1-label">YouTube Gesamt-Views</div><div class="y1-val">85-220M (60 Videos, avg 1.4-3.6M/Video, 3-5 Ausreißer 15-40M)</div></div><div class="y1-card"><div class="y1-label">TikTok Follower</div><div class="y1-val">1.2-4.5M (Mix: Official Account 800k-2M, Top UGC Creator-Kollabs 400k-2.5M sekundäre Reichweite)</div></div><div class="y1-card"><div class="y1-label">Netflix (falls pickup)</div><div class="y1-val">12-35M IF Netflix picks up 6-episode Season 1 docuseries (realistisch ab Y2, hier Pitch-Phase)</div></div><div class="y1-card"><div class="y1-label">Website Unique Visitors</div><div class="y1-val">3.2-9.8M (80% organisch via Social, 12% SEO &#x27;gold mining experience&#x27;, 8% Press)</div></div><div class="y1-card"><div class="y1-label">Warteliste</div><div class="y1-val">62k-185k (Conversion 1.9-1.89% aus Traffic, optimistisch 220k wenn viraler Moment eintritt)</div></div><div class="y1-card"><div class="y1-label">Tier-1-Presse</div><div class="y1-val">18-42 (NYT, Guardian, Spiegel, El País, WSJ, BBC, Vice, NatGeo, Wired, Fast Company)</div></div></div>
+  </div>
+
+  <!-- VIRAL DRIVERS -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">07 · Viralitäts-Treiber · Ranked</div>
+      <div class="subsection-title">Warum <strong>das durchstartet</strong></div>
+    </div>
+    <div class="drivers-list">
+    <div class="driver-row" style="--i: 0">
+      <div class="driver-weight" data-w="10">10</div>
+      <div>
+        <div class="driver-text">Echter Geld-Einsatz &amp; transparente Auszahlung (live gezeigt)</div>
+        <div class="driver-precedent">MrBeast &#x27;$456k Squid Game&#x27; 600M views, Gold Rush &#x27;Biggest Gold Cleanout&#x27; Videos 50-80M views. Menschen lieben echte finanzielle Stakes + Reaktionen.</div>
+      </div>
+    </div>
+    
+    <div class="driver-row" style="--i: 1">
+      <div class="driver-weight" data-w="9">9</div>
+      <div>
+        <div class="driver-text">UGC-Lawine: Besucher filmen eigene Funde (TikTok/Reels)</div>
+        <div class="driver-precedent">Crater of Diamonds State Park (Arkansas, USA): Besucher-Fund-Videos 10-50M views organisch. Wir haben 10x bessere Infrastruktur + Storytelling + professionelle B-Roll.</div>
+      </div>
+    </div>
+    
+    <div class="driver-row" style="--i: 2">
+      <div class="driver-weight" data-w="9">9</div>
+      <div>
+        <div class="driver-text">David-vs-Goliath: &#x27;Kleine Leute&#x27; schlagen Industrie</div>
+        <div class="driver-precedent">GameStop/WallStreetBets (2021): Community vs Establishment = globales Medien-Ereignis. Unsere Story: Community besitzt Mine, heilt Land, verdient fairer als Konzerne.</div>
+      </div>
+    </div>
+    
+    <div class="driver-row" style="--i: 3">
+      <div class="driver-weight" data-w="8">8</div>
+      <div>
+        <div class="driver-text">Visuelle Ikonizität (Spiegel-Sauna, Feuer-Ring, Gold-Partikel in Händen)</div>
+        <div class="driver-precedent">Burning Man Tempel-Burn 100M+ TikTok views, Iceland geothermal lagoons 500M+ tags. Einzigartige Architektur + Natur = share-Mechanik.</div>
+      </div>
+    </div>
+    
+    <div class="driver-row" style="--i: 4">
+      <div class="driver-weight" data-w="9">9</div>
+      <div>
+        <div class="driver-text">Kinder finden Diamanten (emotionaler Apex)</div>
+        <div class="driver-precedent">Jedes &#x27;Kind findet Schatz&#x27; Video geht viral (10-100M views). Bsp: &#x27;Boy finds rare diamond&#x27; BBC, CNN, viral auf allen Plattformen. Bei uns passiert das 8-15x pro Jahr (statistisch).</div>
+      </div>
+    </div>
+    
+    <div class="driver-row" style="--i: 5">
+      <div class="driver-weight" data-w="7">7</div>
+      <div>
+        <div class="driver-text">Transparenz-Pornografie (Live-Kamera auf Schmelzofen, Blockchain, Open Books)</div>
+        <div class="driver-precedent">Patagonia &#x27;Don&#x27;t Buy This Jacket&#x27; (2011) +30% Sales. Everlane &#x27;Radical Transparency&#x27; $250M Valuation. Gegenbewegung zu Greenwashing-Müdigkeit.</div>
+      </div>
+    </div>
+    
+    <div class="driver-row" style="--i: 6">
+      <div class="driver-weight" data-w="8">8</div>
+      <div>
+        <div class="driver-text">Quest-Struktur &amp; Gamification (Levels, Rare Finds, Leaderboards)</div>
+        <div class="driver-precedent">Pokémon GO 1Mrd Downloads, Wordle 300M users in 3 Monate. Menschen lieben Quest-Loops. Unsere &#x27;Diamanten-Fund-Leaderboard&#x27; = dauerhafte Engagement-Mechanik.</div>
+      </div>
+    </div>
+    
+    <div class="driver-row" style="--i: 7">
+      <div class="driver-weight" data-w="6">6</div>
+      <div>
+        <div class="driver-text">Kontroverse &amp; Kritik (Ausbeutungs-Vorwürfe, Debatte um Luxus)</div>
+        <div class="driver-precedent">Jede Kontroverse = Sichtbarkeit. Dubai &#x27;World Islands&#x27; Kritik = 10x Medien-Coverage. Wir werden Kritik bekommen (Luxus-Ökotourismus, &#x27;Greenwashing&#x27;) – das treibt Debatte = Reichweite. Mitigation: radikale Transparenz + Community-Ownership.</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- TOP 5 VIRAL MOMENTS -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">08 · Top-5 erwartete Viral-Momente</div>
+      <div class="subsection-title">Die <strong>konkreten Klick-Katalysatoren</strong></div>
+    </div>
+    <div class="vmoments-wrap"><div class="vmoment"><span class="vmoment-num">1</span><p>8-jähriges Mädchen findet 1.2-Karat Rohdiamant, Eltern brechen weinend zusammen, Video endet mit &#x27;This paid for her university&#x27; – 60-180M views, jedes Mainstream-Outlet covern, Oprah/Ellen-Einladung.</p></div><div class="vmoment"><span class="vmoment-num">2</span><p>Erstes Community-Governance-Meeting eskaliert: Mitglied fordert höhere Auszahlung, Abstimmung live gestreamt, 90% stimmen dagegen – Kontroverse um &#x27;Ist das echte Demokratie oder Performance?&#x27; treibt 35-90M views + 200+ Artikel.</p></div><div class="vmoment"><span class="vmoment-num">3</span><p>Zeitraffer-Video: &#x27;Von Mondlandschaft zu Wald in 18 Monaten&#x27; – Drohnenaufnahmen, 4 Jahreszeiten, erste Rehe kehren zurück, emotionaler Score – 40-120M views, geteilt von UN, Greta Thunberg, David Attenborough retweet.</p></div><div class="vmoment"><span class="vmoment-num">4</span><p>MrBeast-Kollaboration: &#x27;$50,000 Gold Mining Challenge&#x27; – 100 Creator schürfen 48h, Gewinner bekommt Erlös + Match-Donation für Rainforest Trust – 200-450M views (MrBeast-Reichweite), crossover zu unserer Audience.</p></div><div class="vmoment"><span class="vmoment-num">5</span><p>Erstes &#x27;Healed Gold&#x27; Verlobungsring viral: Paar zeigt gesamte Supply Chain (ihr Fund → Schmelze → Chopard Atelier → Proposal in Feuer-Ring) – 25-70M views, New York Times Vows Feature, Chopard teilt offiziell, triggert Luxury-Trend.</p></div></div>
+  </div>
+
+  <!-- UNIQUENESS HERO -->
+  <div class="uniq-hero">
+    <div class="uniq-label">Welt-Erstmaligkeit</div>
+    <div class="uniq-score-ring" style="--score: 94;">
+      <div class="uniq-score-inner">
+        <div class="uniq-score-num">94</div>
+        <div class="uniq-score-max">/ 100</div>
+      </div>
+    </div>
+    <div class="uniq-factors">Erste Integration von aktivem Bergbau + Besucher-Partizipation + Community-Ownership + Rekultivierung + Luxus-Supply-Chain in EINEM System. Crater of Diamonds hat Partizipation, aber keine Rekultivierung/Design. Patagonia hat Impact, aber keine Erlebnis-Komponente. Burning Man hat Kultur, aber keine ökonomische Wertschöpfung. Diese Kombination existiert nirgends. · Architektonische Ikonizität: Spiegel-Sauna, Skill-Kathedrale, Myzel-Kuppel sind share-optimiert UND funktional. Nachahmer können kopieren, aber brauchen 2-5 Jahre + 8-15M€ + Design-Talent (selten). · Healed Gold® Trademark + Chopard/Luxury-Partnerships = 4-7 Jahre Vorsprung. Luxusmarken bewegen sich langsam, Verträge sind exklusiv (vermutlich), Nachahmer müssen eigene Brand aufbauen. · Community-Daten-Vorteil: Nach Y1 haben wir 60k-180k Visitor-Datenpunkte (was funktioniert, welche Narrative, welche Funde, Demografie). Nachahmer starten bei Null.</div>
+    <div class="uniq-defense">◉ Verteidigungsfenster: 4-6 Jahre Quasi-Monopol, dann 3-5 ernsthafte Wettbewerber global, aber wir bleiben &#x27;Original&#x27; (wie Burning Man vs regionale Burns). Nach 10 Jahren ist &#x27;Healed Mining&#x27; eine Kategorie, wir sind Marktführer mit 35-55% Marktanteil.</div>
+  </div>
+
+  <!-- ECONOMIC VALUE -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">09 · Economic Value · Y1 → Exit</div>
+      <div class="subsection-title">Von Start zu <strong>Impact-Unicorn</strong></div>
+    </div>
+    <div class="econ-stack"><div class="econ-row"><span class="econ-year">Y1</span><span class="econ-val">8-18M Revenue, -2 bis +3M EBITDA (invest-heavy, Brand-Building)</span></div><div class="econ-row"><span class="econ-year">Y2</span><span class="econ-val">28-62M Revenue, 6-16M EBITDA (Skalierung, Netflix-Deal 3-8M, Merch/Licensing 2-5M)</span></div><div class="econ-row"><span class="econ-year">Y3</span><span class="econ-val">68-155M Revenue, 15-42M EBITDA (2. Standort Launch trägt 20-35M bei, IP-Licensing 8-18M, Healed Gold® Wholesale 12-30M)</span></div><div class="econ-row"><span class="econ-year">Y5</span><span class="econ-val">220-580M Revenue, 55-165M EBITDA (5 Standorte, Franchising, Zertifizierungs-Einnahmen, Netflix/Streaming-Katalog, Luxus-Kooperationen, Carbon-Credit-Verkauf 8-20M)</span></div><div class="econ-row enterprise"><span class="econ-year">EXIT-VALUE</span><span class="econ-val">850M-2.1Mrd EUR (bei Exit: 15-25x EBITDA Multiple, vergleichbar Impact-Unicorns wie Allbirds 1.7Mrd IPO bei 80M EBITDA, oder Ørsted 50Mrd Market Cap als Energy-Transition-Leader. Wir sind Hybrid: Experience-Economy + Impact + Luxury-Supply + Content-IP = Premium-Multiple.)</span></div></div>
+  </div>
+
+  <!-- PARTNERS: CREATORS -->
+  <div class="partners-section">
+    <div class="partners-title">10 · Tier-1-Creator · First-Wave-Targets</div>
+    <div class="partners-grid">
+    <div class="partner-card creator">
+      <div class="partner-name">Yes Theory</div>
+      <div class="partner-stat">◉ 8.5M Reach · 68% Yes</div>
+      <div class="partner-ask">7-day immersive journey: Anreise → Mine-Experience → Gold-Fund → Profit-Share reveal → Community-Vote Teilnahme</div>
+      <div class="partner-fee">80k-150k Cash + 0.3-0.8% Equity mit 3-Jahr-Vesting</div>
+    </div>
+    
+    <div class="partner-card creator">
+      <div class="partner-name">Johnny Harris (Johnny Harris YouTube)</div>
+      <div class="partner-stat">◉ 6.2M Reach · 55% Yes</div>
+      <div class="partner-ask">Investigative Mini-Doc (18-25 Min): &#x27;The Mine That Heals — Can Gold Mining Be Regenerative?&#x27; mit vollem Zugang zu Finanzen, Community-Governance, Soil-Tests</div>
+      <div class="partner-fee">60k-110k Production-Budget (Co-Produktion, IP geteilt)</div>
+    </div>
+    
+    <div class="partner-card creator">
+      <div class="partner-name">Kraig Adams</div>
+      <div class="partner-stat">◉ 1.8M Reach · 72% Yes</div>
+      <div class="partner-ask">21-day artist residency → poetischer Langform-Film (35-50 Min) über Transformation von Narben zu Schönheit</div>
+      <div class="partner-fee">25k-45k + freie Unterkunft + 0.15% Equity</div>
+    </div>
+    
+    <div class="partner-card creator">
+      <div class="partner-name">Nas Daily / Nuseir Yassin</div>
+      <div class="partner-stat">◉ 58M Reach · 45% Yes</div>
+      <div class="partner-ask">5-day visit → 10x 1-Min Episodes + 1x 8-Min Deep-Dive über Community-Ownership-Modell</div>
+      <div class="partner-fee">120k-200k (hohe Reichweite, aber kürzere Formate)</div>
+    </div>
+    
+    <div class="partner-card creator">
+      <div class="partner-name">Beau Miles</div>
+      <div class="partner-stat">◉ 2.1M Reach · 61% Yes</div>
+      <div class="partner-ask">Solo-Expedition: Baut eigenes Werkzeug, schürft Gold, dokumentiert Rekultivierungs-Prozess über 14 Tage</div>
+      <div class="partner-fee">18k-35k + Material-Budget 8k</div>
+    </div>
+    
+    <div class="partner-card creator">
+      <div class="partner-name">Lexie Alford (Lexie Limitless)</div>
+      <div class="partner-stat">◉ 2.4M Reach · 58% Yes</div>
+      <div class="partner-ask">5-day journey + IG/TikTok Takeover (15-20 pieces content) + YT Vlog</div>
+      <div class="partner-fee">45k-75k + Gold-Jewelry aus eigenem Fund (Chopard-verarbeitet) als Story-Arc</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- PARTNERS: NETWORKS -->
+  <div class="partners-section">
+    <div class="partners-title">11 · Streaming-Networks · Deal-Pipeline</div>
+    <div class="partners-grid">
+    <div class="partner-card network">
+      <div class="partner-name">Netflix</div>
+      <div class="partner-ask">Unscripted Docuseries &#x27;The Healed Mine&#x27; — 6 Episodes, Staffel 1: Aufbau + erste 100 Visitors + Community-Konflikte + erster Gold-Fund</div>
+      <div class="partner-fee">1.2-3.5M€ Licensing Fee Season 1 (nach Proof-of-Concept mit 40k+ YouTube Views auf Indie-Pilot) + Revenue-Share international</div>
+    </div>
+    
+    <div class="partner-card network">
+      <div class="partner-name">Red Bull Media House</div>
+      <div class="partner-ask">Red Bull Adventure Series Integration (3x 22-Min Episodes) + Red Bull TV Feature</div>
+      <div class="partner-fee">80k-180k Produktion Co-Finanzierung + Athlete-Visits (Kletterer testen Abstieg in Mine, Trail-Runner erkunden rekultivierte Landschaft)</div>
+    </div>
+    
+    <div class="partner-card network">
+      <div class="partner-name">ARTE / BBC Earth</div>
+      <div class="partner-ask">60-Min Science-Doc: &#x27;Regenerative Mining — The Lesotho Experiment&#x27; (Arbeitstitel)</div>
+      <div class="partner-fee">120k-280k Co-Produktion (ARTE + BBC Co-Financing typisch), redaktionelle Unabhängigkeit critical</div>
+    </div>
+    
+    <div class="partner-card network">
+      <div class="partner-name">National Geographic / Disney+</div>
+      <div class="partner-ask">NatGeo Explorer: &#x27;Mining Backwards&#x27; — Kann eine Industrie ihre Narben heilen?</div>
+      <div class="partner-fee">400k-1.2M (NatGeo zahlt Premium, aber hohe redaktionelle Kontrolle)</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- PARTNERS: BRANDS -->
+  <div class="partners-section">
+    <div class="partners-title">12 · Brand-Partnerships · Co-Aktivierung</div>
+    <div class="partners-grid">
+    <div class="partner-card brand">
+      <div class="partner-name">Chopard</div>
+      <div class="partner-cat">Luxus-Juwelier (bereits Fairmined-Partner)</div>
+      <div class="partner-fee">1.8M-4.5M (Gold-Abnahme 45-120kg/Jahr mit +68% Premium über Spot)</div>
+    </div>
+    
+    <div class="partner-card brand">
+      <div class="partner-name">Patagonia</div>
+      <div class="partner-cat">Outdoor / Activist Brand</div>
+      <div class="partner-fee">280k-650k (Lizenz + Material-Kauf + Co-Marketing Budget)</div>
+    </div>
+    
+    <div class="partner-card brand">
+      <div class="partner-name">Nothing (Carl Pei Tech Brand)</div>
+      <div class="partner-cat">Consumer Tech / Design-Forward</div>
+      <div class="partner-fee">420k-890k (Gold-Lieferung 15kg + Brand-Partnership Fee)</div>
+    </div>
+    
+    <div class="partner-card brand">
+      <div class="partner-name">Hendrick&#x27;s Gin</div>
+      <div class="partner-cat">Premium Spirits (bekannt für unkonventionelle Aktivationen)</div>
+      <div class="partner-fee">180k-320k (3x Pop-ups/Jahr + Gold-Lieferung + Co-Marketing)</div>
+    </div>
+    
+    <div class="partner-card brand">
+      <div class="partner-name">IWC Schaffhausen</div>
+      <div class="partner-cat">Luxusuhren</div>
+      <div class="partner-fee">2.1M-5.8M (Gold-Abnahme 35-95kg + Licensing Fee)</div>
+    </div>
+    
+    <div class="partner-card brand">
+      <div class="partner-name">Arc&#x27;teryx</div>
+      <div class="partner-cat">Technical Outdoor Apparel</div>
+      <div class="partner-fee">95k-240k (kleinere Brand-Partnership, aber hochwertige Audience)</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- CAC/LTV -->
+  <div class="cac-ltv">
+    <h3>◉ CAC vs LTV · Unit Economics</h3>
+    <div class="cac-ltv-row"><div class="cac-ltv-key">CAC · organisch Social</div><div class="cac-ltv-val">€12-35 (Instagram/TikTok Ads zu &#x27;Gold mining adventure&#x27; targeting 25-45, HHI &gt;75k)</div></div>
+    <div class="cac-ltv-row"><div class="cac-ltv-key">CAC · Creator-Partnerships</div><div class="cac-ltv-val">€4-18 (Yes Theory Video = 2M Views, 1.5% CTR = 30k Clicks, 2.8% Conversion = 840 Bookings, Cost 120k = 143€/Booking, aber nur 18€ wenn attributiert über 18 Monate)</div></div>
+    <div class="cac-ltv-row"><div class="cac-ltv-key">LTV · zahlender Besucher</div><div class="cac-ltv-val">€1680-4200 (Breakdown: Initial Visit 1200-1800€ + 22% Return-Visit-Rate + 8% kaufen Healed-Gold-Jewelry für Ø1850€ + 3% werden Community-Shareholder mit Ø8500€ Buy-In)</div></div>
+    <div class="cac-ltv-row"><div class="cac-ltv-key">LTV/CAC Ratio</div><div class="cac-ltv-val">93-350x bei Creator-Partnerships, 48-120x bei Paid Ads</div></div>
+    <div class="reality-check"><strong>Reality-Check:</strong> Zahlen unrealistisch optimistisch weil: (1) Conversion 2.8% zu hoch — realistisch 0.8-1.4% für High-Ticket-Travel = CAC 85-180€; (2) Return-Rate 22% annimmt konstante Kapazität + Novelty hält nicht; (3) Jewelry-Upsell 8% basiert auf Chopard-Käufern, aber 80% Besucher kaufen nicht Luxus-Preis; (4) Creator-Fatigue nach 18 Monaten — erste 3-4 Videos performen, dann Diminishing Returns. REALISTISCH: LTV 950-1680€, CAC 45-95€ = LTV/CAC 10-37x — immer noch ausgezeichnet, aber nicht magisch.</div>
+  </div>
+
+  <!-- FAILURE MODES -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">13 · Failure-Modes · Was schiefgehen kann</div>
+      <div class="subsection-title">Die <strong>Risiken</strong>, ehrlich</div>
+    </div>
+    <div class="failure-list">
+    <div class="failure-row">
+      <div class="failure-pct">42%</div>
+      <div class="failure-body">
+        <div class="failure-mode">Exploitation-Kritik (&#x27;Poverty Safari&#x27;, &#x27;Greenwashing Theater für Reiche&#x27;)</div>
+        <div class="failure-mit">→ Radikale Transparenz (Live-Zahlen, Open Books, unabhängiges Audit jährlich), Community-Ownership majority (51%), lokale Hiring 80%+, Interviewer-Training gegen voyeuristische Frames. Proaktiv Critics einladen (peer review). Aber: Kritik kommt trotzdem = Sichtbarkeit.</div>
+      </div>
+    </div>
+    
+    <div class="failure-row">
+      <div class="failure-pct">28%</div>
+      <div class="failure-body">
+        <div class="failure-mode">Fund-Enttäuschung führt zu negativen Reviews (&#x27;Paid €980, found nothing&#x27;)</div>
+        <div class="failure-mit">→ Garantie: Minimum 0.3g Gold ODER Ticket-Gutschrift (kostet uns 18-35€, verhindert 1-Stern-Lawinen). Storytelling: &#x27;Quest ist die Reise&#x27; statt Lotto-Frame. Post-Visit Narrative-Workshop (&#x27;Was hast du gelernt?&#x27;) senkt Enttäuschung um 60% (Studien zu Experience-Reframing).</div>
+      </div>
+    </div>
+    
+    <div class="failure-row">
+      <div class="failure-pct">18%</div>
+      <div class="failure-body">
+        <div class="failure-mode">Umwelt-Skandal (Chemie-Leck, Fluss-Kontamination, gefährdete Art gestört)</div>
+        <div class="failure-mit">→ Over-Engineering: Wasser-Monitoring 24/7, geschlossene Kreisläufe, Biodiversitäts-Baseline + jährliche Audits durch NGO (WWF/NABU-Level). Aber: Ein Vorfall = globale Schlagzeilen = existenzielle Krise. Versicherung 5M€, PR-Krisenplan, Science-Advisory-Board.</div>
+      </div>
+    </div>
+    
+    <div class="failure-row">
+      <div class="failure-pct">65%</div>
+      <div class="failure-body">
+        <div class="failure-mode">Nachahmer verwässern Markt &amp; unterbieten Standards (billiger, weniger Impact)</div>
+        <div class="failure-mit">→ Geschwindigkeit: 18-30 Monate First-Mover-Vorteil. Trademark &#x27;Healed Gold®&#x27;, Zertifizierung etablieren (wie &#x27;Fair Trade&#x27;). Patente auf Architektur-Designs, Prozess-IP (Gamification-System). Aber: Monopol maximal 4-6 Jahre, dann Markt-Fragmentierung.</div>
+      </div>
+    </div>
+    
+    <div class="failure-row">
+      <div class="failure-pct">35%</div>
+      <div class="failure-body">
+        <div class="failure-mode">Interne Governance-Paralyse (Community blockiert profitable Entscheidungen)</div>
+        <div class="failure-mit">→ Hybrid-Modell: Community 51% Ownership, aber Professional Board mit Veto bei existenziellen Fragen (Sicherheit, Insolvenz-Risiko). Quartalsweise Abstimmungen (nicht ad-hoc). Mediation-Prozess. Aber: Konflikte = Content (siehe Viral Moment #2).</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- BLUNT VERDICT -->
+  <div class="blunt-verdict">Ja, das wird viral – die Kombination aus echtem Geld, UGC-Mechanik, visueller Ikonizität und David-vs-Goliath-Narrativ ist eine Lawinen-Maschine, vergleichbar mit MrBeast-Philanthropie trifft Gold Rush trifft Burning Man. Wird es ein Phänomen? 70% Wahrscheinlichkeit für kultur-prägende Wirkung (TED-Talk-Niveau, Duden-Eintrag &#x27;healen&#x27;), 35% für Unicorn-Valorisierung – wenn Execution stimmt und kein Umwelt-Skandal passiert, ist das in 5 Jahren das Paradebeispiel für &#x27;Regenerative Economy&#x27; in Business Schools weltweit.</div>
+</section>
+
+<!-- LAYER 5: TIEFE (FULL ENGINE ANALYSIS) -->
+<section id="layer5">
+  <div class="layer-label">Schicht 05 · Tiefe</div>
   <h2 class="layer-title">Die <strong>volle Engine-Analyse</strong></h2>
 
   <div class="depth-intro">
@@ -2039,6 +2954,10 @@ body.unlocked .depth-switch { opacity: 1; }
       <span class="engine-tag">SOIL</span>
       <span class="engine-tag">FESTIVAL</span>
       <span class="engine-tag">ECONOMIC CORE</span>
+      <span class="engine-tag">SHOW</span>
+      <span class="engine-tag">DISTRIBUTION</span>
+      <span class="engine-tag">VIRALITY</span>
+      <span class="engine-tag">PARTNERSHIPS</span>
     </div>
   </footer>
 </section>
@@ -2090,7 +3009,7 @@ setTimeout(() => {
 // ============ LAYER INDICATOR + DEPTH SWITCH ============
 const dots = document.querySelectorAll('.li-dot');
 const buttons = document.querySelectorAll('.depth-btn');
-const sections = ['layer1', 'layer2', 'layer3', 'layer4'].map(id => document.getElementById(id));
+const sections = ['layer1', 'layer2', 'layer3', 'layer4', 'layer5'].map(id => document.getElementById(id));
 
 function updateIndicator() {
   const midY = window.scrollY + window.innerHeight / 2;

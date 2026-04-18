@@ -14,6 +14,9 @@
   --accent-warm: #ffd97a;
   --accent-green: #6bce7f;
   --accent-earth: #c89e6a;
+  --gold: #d4af37;
+  --gold-bright: #f4cd5a;
+  --diamond: #e0f0ff;
   --text: #e4e8f0;
   --muted: #8a94a8;
 }
@@ -196,6 +199,180 @@ body.unlocked #layer-indicator { opacity: 1; }
   background: linear-gradient(180deg, var(--bg-signal) 0%, var(--bg-mid) 100%);
   padding: 120px 20px 140px;
 }
+
+/* ============ KERN-IMPAKT (inside Layer 2 top) ============ */
+.core-impact {
+  max-width: 1100px; margin: 0 auto 120px;
+  padding: 50px 40px;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 0%, rgba(212,175,55,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 70% 100%, rgba(224,240,255,0.08) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(20,14,5,0.6) 0%, rgba(10,14,23,0.9) 100%);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 24px; position: relative; overflow: hidden;
+}
+.core-impact::before {
+  content: '◈'; position: absolute; top: 24px; right: 32px;
+  font-size: 32px; color: var(--gold); opacity: 0.35;
+  animation: diamondSpin 20s linear infinite;
+}
+@keyframes diamondSpin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+.core-kicker {
+  font-size: 11px; letter-spacing: 0.4em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 12px; font-weight: 600;
+}
+.core-headline {
+  font-size: clamp(26px, 3.8vw, 42px); font-weight: 200; line-height: 1.25;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 50%, var(--diamond) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.core-subheadline {
+  font-size: 15px; color: var(--muted); font-style: italic;
+  max-width: 760px; margin-bottom: 40px;
+}
+
+/* Value stack */
+.vstack { margin-bottom: 50px; }
+.vstack-title {
+  font-size: 11px; letter-spacing: 0.3em; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.vstack-row {
+  display: grid; grid-template-columns: 220px 1fr auto;
+  gap: 20px; align-items: center; margin-bottom: 14px;
+}
+.vstack-label { font-size: 13px; }
+.vstack-name { display: block; font-weight: 600; color: var(--col); margin-bottom: 2px; }
+.vstack-what { display: block; font-size: 11px; color: var(--muted); }
+.vstack-bar {
+  height: 12px; background: rgba(255,255,255,0.04); border-radius: 8px;
+  overflow: hidden; position: relative;
+}
+.vstack-fill {
+  height: 100%; width: calc(var(--pct) * 1%);
+  background: linear-gradient(90deg, var(--col) 0%, color-mix(in srgb, var(--col) 70%, white) 100%);
+  border-radius: 8px;
+  transform-origin: left;
+  animation: fillGrow 1.2s cubic-bezier(0.2,0.9,0.3,1) both;
+  animation-delay: 0.3s;
+}
+@keyframes fillGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.vstack-pct {
+  font-size: 22px; font-weight: 300; color: var(--col);
+  min-width: 60px; text-align: right;
+}
+
+/* Metrics grid */
+.metrics-grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 50px;
+}
+.metric-card {
+  background: linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(224,240,255,0.03) 100%);
+  border: 1px solid rgba(212,175,55,0.2);
+  padding: 20px 18px; border-radius: 14px;
+  animation: rise 0.7s ease both; animation-delay: calc(var(--i) * 0.08s + 0.3s);
+}
+.metric-name {
+  font-size: 10px; letter-spacing: 0.2em; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.metric-big {
+  font-size: 15px; color: var(--gold-bright); font-weight: 500; line-height: 1.3;
+}
+
+/* Profit-Share */
+.ps-head {
+  font-size: 18px; font-weight: 400; color: var(--gold-bright);
+  margin: 40px 0 6px;
+}
+.ps-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; font-style: italic; }
+.ps-steps {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 30px;
+}
+.ps-step {
+  display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
+  padding: 14px 18px; background: rgba(0,0,0,0.25);
+  border-left: 2px solid var(--gold); border-radius: 0 10px 10px 0;
+  animation: slideIn 0.6s ease both; animation-delay: calc(var(--i) * 0.08s + 0.5s);
+}
+.ps-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gold); color: #1a1400;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 12px; flex-shrink: 0;
+}
+.ps-text { font-size: 13px; line-height: 1.5; }
+
+.split-grid {
+  display: grid; gap: 8px; margin: 20px 0 30px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.split-row {
+  padding: 12px 14px; background: rgba(255,255,255,0.02);
+  border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0;
+}
+.split-row strong {
+  display: block; font-size: 11px; color: var(--gold);
+  letter-spacing: 0.12em; margin-bottom: 4px;
+}
+.split-row span { font-size: 12px; color: var(--text); }
+
+.core-row {
+  display: grid; gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin: 20px 0 30px;
+}
+.core-block {
+  padding: 22px 22px;
+  background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 14px;
+}
+.core-block h4 {
+  font-size: 11px; letter-spacing: 0.2em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 12px; font-weight: 600;
+}
+.core-block p { font-size: 13px; color: var(--text); line-height: 1.55; }
+
+.premium-box {
+  background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(224,240,255,0.05) 100%);
+  border: 1px solid rgba(212,175,55,0.3);
+  padding: 24px 26px; border-radius: 16px; margin-bottom: 30px;
+}
+.premium-stats {
+  display: flex; flex-wrap: wrap; gap: 30px; margin-top: 14px;
+}
+.premium-stat strong {
+  display: block; font-size: 24px; color: var(--gold-bright); font-weight: 300;
+}
+.premium-stat span { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+.core-tension {
+  font-size: 16px; font-style: italic; color: var(--text);
+  padding: 22px 26px; margin: 30px 0;
+  background: rgba(212,175,55,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0; line-height: 1.6;
+}
+.core-tension strong { color: var(--gold-bright); font-style: normal; }
+
+.shadow-warn {
+  margin-top: 30px; padding: 18px 22px;
+  background: rgba(255,107,107,0.05); border: 1px solid rgba(255,107,107,0.2);
+  border-radius: 12px;
+  font-size: 13px; color: #ffb0b0;
+}
+.shadow-warn::before { content: '⚠ '; color: #ff6b6b; font-weight: 600; }
+.shadow-warn strong { color: #ff8a6b; }
+
+@media (max-width: 640px) {
+  .vstack-row { grid-template-columns: 1fr; gap: 6px; }
+  .vstack-pct { text-align: left; }
+}
+
 
 .principles-grid {
   display: grid; gap: 24px; max-width: 1100px; margin: 0 auto 100px;
@@ -675,7 +852,7 @@ body.unlocked .depth-switch { opacity: 1; }
 <!-- PASSWORD GATE -->
 <div id="gate">
   <div class="gate-inner">
-    <div class="gate-symbol">⛏️</div>
+    <div class="gate-symbol">◈</div>
     <h1>Zugang · Regeneration</h1>
     <input type="password" id="pw" placeholder="• • • • • •" autofocus autocomplete="off">
     <div class="hint">↵ enter</div>
@@ -709,10 +886,10 @@ body.unlocked .depth-switch { opacity: 1; }
     <div class="ring"></div>
   </div>
   <div class="signal-wrap">
-    <div class="signal-symbol">⛏️</div>
-    <div class="signal-word">Regeneration</div>
-    <p class="signal-sentence">Heilung wird profitabel durch Ökosystem-Wiederherstellung statt Ausbeutung mit lokaler Mehrheitskontrolle.</p>
-    <p class="signal-breath">„Wo einst Wunden geschlagen wurden, wachsen Ökosysteme zurück – durch Hände, die endlich besitzen, was sie heilen."</p>
+    <div class="signal-symbol">◈</div>
+    <div class="signal-word">Rohstoff + Heilung</div>
+    <p class="signal-sentence">Wir graben Gold und Diamanten – und heilen dabei die Wunde.</p>
+    <p class="signal-breath">„Jedes Gramm Gold finanziert zehn Quadratmeter Wildnis; jeder Diamant trägt das Gedächtnis seiner eigenen Heilung."</p>
   </div>
   <div class="scroll-hint">↓ Tiefer</div>
 </section>
@@ -720,8 +897,109 @@ body.unlocked .depth-switch { opacity: 1; }
 <!-- LAYER 2: STRUKTUR -->
 <section id="layer2">
   <div class="layer-label">Schicht 02 · Struktur</div>
-  <h2 class="layer-title">Die <strong>3 Prinzipien</strong>, die alles tragen</h2>
 
+  <!-- KERN-IMPAKT (PRIMÄR) -->
+  <div class="core-impact">
+    <div class="core-kicker">◈ Kern-Impakt · Primär</div>
+    <h2 class="core-headline">Wir graben Gold und Diamanten – und heilen dabei die Wunde.</h2>
+    <p class="core-subheadline">Jedes Gramm Gold finanziert zehn Quadratmeter Wildnis; jeder Diamant trägt das Gedächtnis seiner eigenen Heilung.</p>
+
+    <div class="vstack">
+      <div class="vstack-title">Wo das Geld wirklich herkommt</div>
+      
+    <div class="vstack-row" style="--pct: 65; --col: #d4af37;">
+      <div class="vstack-label">
+        <span class="vstack-name">1 · Rohstoff</span>
+        <span class="vstack-what">Gold + Diamanten aus Tailings/Alluvial</span>
+      </div>
+      <div class="vstack-bar"><div class="vstack-fill"></div></div>
+      <div class="vstack-pct">65%</div>
+    </div>
+    
+    <div class="vstack-row" style="--pct: 20; --col: #00d9ff;">
+      <div class="vstack-label">
+        <span class="vstack-name">2 · Tourismus</span>
+        <span class="vstack-what">Eintritt + Workshops + Experience</span>
+      </div>
+      <div class="vstack-bar"><div class="vstack-fill"></div></div>
+      <div class="vstack-pct">20%</div>
+    </div>
+    
+    <div class="vstack-row" style="--pct: 15; --col: #6bce7f;">
+      <div class="vstack-label">
+        <span class="vstack-name">3 · Regeneration</span>
+        <span class="vstack-what">Biodiversitätszertifikate + Holz + Lehr-Tourismus</span>
+      </div>
+      <div class="vstack-bar"><div class="vstack-fill"></div></div>
+      <div class="vstack-pct">15%</div>
+    </div>
+    
+    </div>
+
+    <div class="vstack-title" style="margin-top: 20px;">Die harten Zahlen (ab Jahr 4)</div>
+    <div class="metrics-grid">
+    <div class="metric-card" style="--i: 0">
+      <div class="metric-name">Jahres-Gesamtumsatz</div>
+      <div class="metric-big">5.3M - 13.6M EUR (konservativ-optimistisch, ab Jahr 4)</div>
+    </div>
+    
+    <div class="metric-card" style="--i: 1">
+      <div class="metric-name">Davon aus Rohstoff</div>
+      <div class="metric-big">68-74% | 3.6M - 10.1M EUR (Gold+Diamanten inkl. Premium)</div>
+    </div>
+    
+    <div class="metric-card" style="--i: 2">
+      <div class="metric-name">Davon aus Tourismus</div>
+      <div class="metric-big">18-22% | 1.0M - 2.2M EUR (Eintritt+Workshops+Unterkunft)</div>
+    </div>
+    
+    <div class="metric-card" style="--i: 3">
+      <div class="metric-name">Besucher-Auszahlung Ø</div>
+      <div class="metric-big">420 - 780 EUR/Person/Jahr (aus Trust-Token-Dividende bei 5200 Teilnehmern)</div>
+    </div>
+    
+    <div class="metric-card" style="--i: 4">
+      <div class="metric-name">Community-Dividende</div>
+      <div class="metric-big">1100 - 2900 EUR pro Einwohner/Jahr ab Jahr 6 (bei 800 Einwohnern, 51% Trust-Anteil)</div>
+    </div>
+    </div>
+
+    <div class="core-tension">
+      Extraktion ohne Regeneration ist Diebstahl an der Zukunft. Regeneration ohne ökonomischen Kern ist Philanthropie auf Zeit – sie verbrennt Kapital statt es zu zirkulieren. Nur wenn der Rohstoff die Heilung finanziert UND die Heilung den Rohstoff ethisch legitimiert, entsteht ein System das sich selbst trägt. Die Spannung ist der Motor: Besucher kommen für Gold, bleiben für Bedeutung, kehren zurück als Treuhänder.
+    </div>
+
+    <div class="ps-head">◉ Finder-Trust-Split · wie Besucher tatsächlich profitieren</div>
+    <p class="ps-sub">Finder-Trust-Split mit Regeneration-Equity</p>
+    <div class="ps-steps"><div class="ps-step" style="--i: 0"><div class="ps-num">1</div><div class="ps-text">Besucher zahlt 280-650€ Premium-Eintritt (je nach Claim-Typ: Panning/Sluice/Gravel-Dig), inkl. Versicherung + geologischer Briefing</div></div><div class="ps-step" style="--i: 1"><div class="ps-num">2</div><div class="ps-text">Jeder Fund unter 0.5g Gold ODER 0.3 Karat Diamant: 100% Finder-Eigentum, sofortige Zertifizierung + Buyback-Option zu Spot+15%</div></div><div class="ps-step" style="--i: 2"><div class="ps-num">3</div><div class="ps-text">Funde darüber: Finder erhält 35% Marktwert sofort + 15% als 5-Jahres-Token im Community-Trust</div></div><div class="ps-step" style="--i: 3"><div class="ps-num">4</div><div class="ps-text">Gewerblicher Betrieb (Haldenwäsche, CIL-Anlage): 60% in Community-Trust (alle Besucher des Jahres teilen), 25% Operations, 15% Regenerationsfonds</div></div><div class="ps-step" style="--i: 4"><div class="ps-num">5</div><div class="ps-text">Jährliche Besucher erhalten Trust-Token (NFT) = Anspruch auf anteilige Jahresdividende aus gewerblichem Ertrag</div></div><div class="ps-step" style="--i: 5"><div class="ps-num">6</div><div class="ps-text">Auszahlung nach Jahresabschluss: Token-Holder teilen 60% des Netto-Rohstoffumsatzes, gewichtet nach Teilnahme-Tagen</div></div><div class="ps-step" style="--i: 6"><div class="ps-num">7</div><div class="ps-text">Nach 5 Jahren: Token wandeln zu dauerhaftem Equity (DAO-Stimmrecht im Community-Trust)</div></div></div>
+
+    <div class="vstack-title">Ertrags-Aufteilung</div>
+    <div class="split-grid"><div class="split-row"><strong>Finder (Kleinfund)</strong><span>100% bei Funden &lt;0.5g Gold / &lt;0.3ct Diamant</span></div><div class="split-row"><strong>Token-Holder Pool</strong><span>60% des gewerblichen Netto-Ertrags auf alle Token-Holder/Jahr</span></div><div class="split-row"><strong>Community Trust</strong><span>51% Governance-Mehrheit via akkumulierte Token nach 3+ Besuchen oder lokaler Wohnsitz</span></div><div class="split-row"><strong>Betrieb</strong><span>25% Betrieb, Sicherheit, Reinvestition</span></div><div class="split-row"><strong>Regeneration-Fonds</strong><span>15% zweckgebunden: Aufforstung, Wasserqualität, Biodiversitäts-Offsets</span></div></div>
+
+    <div class="core-row">
+      <div class="core-block">
+        <h4>◆ Anti-Salting-Protokoll</h4>
+        <p>Geologisches Baseline-Mapping vor Öffnung (Kern-Bohrungen, geophysikalische Surveys, peer-reviewed). Jeder Claim: tägliche Foto-Dokumentation + Sediment-Proben durch unabhängige Mineralogen (rotierend, kein dauerhaftes Personal). Funde &gt;1g/1ct: obligatorische Röntgendiffraktion + Isotopen-Analyse gegen externes Referenz-Material. Blockchain-Hashes aller Proben ab Tag 1.</p>
+      </div>
+      <div class="core-block">
+        <h4>◇ Authentifizierte Provenance</h4>
+        <p>Jeder Fund erhält Regeneration-Zertifikat (Blockchain + physischer NFC-Tag): GPS-Koordinaten, Finder-ID (anonym/öffentlich wählbar), Biodiversitäts-Offset-Anteil (m² Habitat pro Gramm/Karat), Wasserqualitäts-Delta seit Betriebsbeginn. Marken: &#x27;Healed Gold®&#x27; und &#x27;Reconciliation Diamond®&#x27;. Kimberley-Process-Äquivalent für Konfliktfreiheit + Regenerations-Impact.</p>
+      </div>
+    </div>
+
+    <div class="premium-box">
+      <h4 style="font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px;">◈ Premium-Positionierung</h4>
+      <p style="font-size: 14px; color: var(--text); margin-bottom: 10px;"><strong>„Healed Gold®" &amp; „Reconciliation Diamond®"</strong> — Käufer: Luxus-Juweliere (Chopard, Brilliant Earth, Catbird) · Impact-Investoren als Sammelobjekte · Museen/Galerien (konfliktminerale Gegen-Narrative) · Hochzeitsmarkt (bewusste Millennials/Gen-Z) · Technologie-Sektor (ethisches Gold für Elektronik-Prototypen)</p>
+      <div class="premium-stats">
+        <div class="premium-stat"><strong>52-95% Aufpreis (Fairtrade Gold erzielt +30-40%; mit Regeneration-Storytelling + limitierter Menge + Besucher-Co-Kreation: +52-95% zu Luxus-Juwelieren dokumentiert bei Fura Gems, Chopard &#x27;Journey to Sustainable Luxury&#x27;)</strong><span>Aufpreis auf Börsengold</span></div>
+        <div class="premium-stat"><strong>1.8M - 4.2M zusätzlich (bei 65% des Outputs als Premium vermarktet mit Ø 73% Markup)</strong><span>Jahres-Zusatzumsatz</span></div>
+      </div>
+    </div>
+
+    <div class="shadow-warn"><strong>Ehrlicher Schatten:</strong> Gold-Sucht ist real – die psychologische Dynamik von Funden kann rationales Risiko-Management überschreiben (Unfälle, Überanstrengung). Marktvolatilität: Gold-Crash auf $1400/oz halbiert Umsatz über Nacht. Kein noch so gutes Storytelling eliminiert die Abhängigkeit von Rohstoffpreisen, die außerhalb unserer Kontrolle liegen.</div>
+  </div>
+
+  <!-- STRUKTUR (Prinzipien/Phasen/etc.) -->
+  <h2 class="layer-title">Die <strong>3 Prinzipien</strong>, die alles tragen</h2>
   <div class="principles-grid">
     <div class="principle-card" style="--i: 0">
       <div class="principle-num">01</div>
@@ -801,8 +1079,9 @@ body.unlocked .depth-switch { opacity: 1; }
 
 <!-- LAYER 3: ATMOSPHÄRE (NEW) -->
 <section id="layer3">
-  <div class="layer-label">Schicht 03 · Atmosphäre</div>
-  <h2 class="layer-title">Der Ort, den <strong>Besucher betreten</strong></h2>
+  <div class="layer-label">Schicht 03 · Atmosphäre · Zusatz-Werte</div>
+  <h2 class="layer-title">Der <strong>Rahmen</strong>, der das Wertvolle trägt</h2>
+  <p style="text-align: center; max-width: 680px; margin: -30px auto 40px; color: var(--muted); font-size: 14px;">Rekultivierung, Holzwirtschaft und Festival sind NICHT der ökonomische Kern — aber ohne sie zerfällt das System. Sie machen aus Extraktion Legitimation, aus Gold Bedeutung, aus einem Besuch eine Wiederkehr.</p>
   <div class="atmos-words">Ehrfürchtige Funktionalität · Schwitzendes Holz · Gewollte Langsamkeit · Kompetenz als Erotik · Dreck unter Fingernägeln</div>
 
   <!-- SOIL: Phytoremediation -->
@@ -1759,6 +2038,7 @@ body.unlocked .depth-switch { opacity: 1; }
       <span class="engine-tag">CHOREO</span>
       <span class="engine-tag">SOIL</span>
       <span class="engine-tag">FESTIVAL</span>
+      <span class="engine-tag">ECONOMIC CORE</span>
     </div>
   </footer>
 </section>

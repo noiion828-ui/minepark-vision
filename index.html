@@ -8,9 +8,12 @@
 :root {
   --bg-deep: #0a0e17;
   --bg-mid: #1a1f2e;
+  --bg-atmos: #0f1e1a;
   --bg-signal: #0d1117;
   --accent: #00d9ff;
   --accent-warm: #ffd97a;
+  --accent-green: #6bce7f;
+  --accent-earth: #c89e6a;
   --text: #e4e8f0;
   --muted: #8a94a8;
 }
@@ -34,10 +37,7 @@ html, body {
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 #gate.unlocked { opacity: 0; visibility: hidden; pointer-events: none; }
-#gate .gate-inner {
-  text-align: center; padding: 30px;
-  animation: gateFloat 4s ease-in-out infinite;
-}
+#gate .gate-inner { text-align: center; padding: 30px; animation: gateFloat 4s ease-in-out infinite; }
 #gate .gate-symbol {
   font-size: 70px; margin-bottom: 20px;
   filter: drop-shadow(0 0 20px var(--accent));
@@ -50,8 +50,7 @@ html, body {
 #gate input {
   background: transparent; border: none; border-bottom: 1px solid var(--accent);
   color: var(--text); font-size: 22px; padding: 10px 20px; width: 260px;
-  text-align: center; outline: none; font-family: inherit;
-  letter-spacing: 0.15em;
+  text-align: center; outline: none; font-family: inherit; letter-spacing: 0.15em;
 }
 #gate input:focus { border-bottom-color: var(--accent-warm); }
 #gate .hint { color: var(--muted); margin-top: 16px; font-size: 11px; letter-spacing: 0.2em; }
@@ -67,7 +66,7 @@ html, body {
   50% { transform: scale(1.08); filter: drop-shadow(0 0 40px var(--accent-warm)); }
 }
 
-/* ============ LAYER INDICATOR ============ */
+/* ============ LAYER INDICATOR (4 DOTS) ============ */
 #layer-indicator {
   position: fixed; left: 30px; top: 50%; transform: translateY(-50%);
   z-index: 1000; display: flex; flex-direction: column; gap: 12px;
@@ -118,38 +117,31 @@ body.unlocked #layer-indicator { opacity: 1; }
   animation: signalEnter 2s ease 0.5s forwards;
 }
 @keyframes signalEnter {
-  from { opacity: 0; transform: scale(0.7) rotate(-10deg); filter: blur(12px); }
-  to { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+  from { opacity: 0; transform: scale(0.7); filter: blur(12px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
 }
 .signal-symbol {
   font-size: clamp(80px, 15vw, 160px);
   display: inline-block; margin-bottom: 30px;
-  animation: breathe 6s ease-in-out infinite, gentleRotate 20s linear infinite;
+  animation: breathe 6s ease-in-out infinite;
   filter: drop-shadow(0 0 30px rgba(0,217,255,0.4));
 }
 @keyframes breathe {
   0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(0,217,255,0.4)); }
   50% { transform: scale(1.04); filter: drop-shadow(0 0 60px rgba(255,217,122,0.6)); }
 }
-@keyframes gentleRotate {
-  from { }
-  to { }
-}
 .signal-word {
-  font-size: clamp(42px, 7vw, 80px);
-  font-weight: 200; letter-spacing: 0.05em;
+  font-size: clamp(42px, 7vw, 80px); font-weight: 200; letter-spacing: 0.05em;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   margin-bottom: 32px;
 }
 .signal-sentence {
-  font-size: clamp(18px, 2.3vw, 24px);
-  color: var(--text); font-weight: 300;
+  font-size: clamp(18px, 2.3vw, 24px); color: var(--text); font-weight: 300;
   max-width: 640px; margin: 0 auto 24px;
 }
 .signal-breath {
-  font-size: clamp(14px, 1.6vw, 17px);
-  color: var(--muted); font-style: italic;
+  font-size: clamp(14px, 1.6vw, 17px); color: var(--muted); font-style: italic;
   max-width: 560px; margin: 0 auto;
   animation: breathFade 5s ease-in-out infinite;
 }
@@ -162,13 +154,11 @@ body.unlocked #layer-indicator { opacity: 1; }
   position: absolute; top: 50%; left: 50%;
   width: 500px; height: 500px;
   transform: translate(-50%, -50%);
-  z-index: -1;
-  pointer-events: none;
+  z-index: -1; pointer-events: none;
 }
 .concentric-rings .ring {
   position: absolute; inset: 0;
-  border: 1px solid rgba(0,217,255,0.12);
-  border-radius: 50%;
+  border: 1px solid rgba(0,217,255,0.12); border-radius: 50%;
   animation: ringPulse 8s ease-in-out infinite;
 }
 .concentric-rings .ring:nth-child(2) { animation-delay: 1.3s; transform: scale(0.7); }
@@ -188,12 +178,7 @@ body.unlocked #layer-indicator { opacity: 1; }
   50% { opacity: 0.8; transform: translateX(-50%) translateY(8px); }
 }
 
-/* ============ LAYER 2: MID ============ */
-#layer2 {
-  position: relative; z-index: 2;
-  background: linear-gradient(180deg, var(--bg-signal) 0%, var(--bg-mid) 100%);
-  padding: 120px 20px 140px;
-}
+/* ============ SHARED LAYER STYLES ============ */
 .layer-label {
   text-align: center; color: var(--muted);
   font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
@@ -201,9 +186,16 @@ body.unlocked #layer-indicator { opacity: 1; }
 }
 .layer-title {
   text-align: center; font-size: clamp(28px, 4vw, 42px);
-  font-weight: 200; margin-bottom: 60px;
+  font-weight: 200; margin-bottom: 50px;
 }
 .layer-title strong { color: var(--accent); font-weight: 400; }
+
+/* ============ LAYER 2: MID ============ */
+#layer2 {
+  position: relative; z-index: 2;
+  background: linear-gradient(180deg, var(--bg-signal) 0%, var(--bg-mid) 100%);
+  padding: 120px 20px 140px;
+}
 
 .principles-grid {
   display: grid; gap: 24px; max-width: 1100px; margin: 0 auto 100px;
@@ -215,12 +207,13 @@ body.unlocked #layer-indicator { opacity: 1; }
   padding: 32px 28px; border-radius: 16px;
   position: relative; overflow: hidden;
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
-  opacity: 0; transform: translateY(40px) scale(0.95);
   transform-style: preserve-3d;
+  animation: rise 0.7s ease both;
+  animation-delay: calc(var(--i) * 0.12s);
 }
-.principle-card.in-view {
-  opacity: 1; transform: translateY(0) scale(1);
-  transition-delay: calc(var(--i) * 0.15s);
+@keyframes rise {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .principle-card:hover {
   transform: translateY(-8px) scale(1.02) rotateX(2deg) rotateY(-2deg);
@@ -238,53 +231,34 @@ body.unlocked #layer-indicator { opacity: 1; }
   color: var(--accent-warm); margin-bottom: 14px;
 }
 .principle-card .claim {
-  font-size: 17px; color: var(--text); margin-bottom: 18px;
-  font-weight: 400; line-height: 1.5;
+  font-size: 17px; color: var(--text); margin-bottom: 18px; font-weight: 400; line-height: 1.5;
 }
 .principle-card .action {
   font-size: 13px; color: var(--muted);
   padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08);
 }
 .principle-card .action-label {
-  color: var(--accent); font-weight: 600;
-  letter-spacing: 0.15em; font-size: 10px;
-  display: block; margin-bottom: 4px;
+  color: var(--accent); font-weight: 600; letter-spacing: 0.15em;
+  font-size: 10px; display: block; margin-bottom: 4px;
 }
 
-.timeline-wrap {
-  max-width: 1100px; margin: 0 auto 100px;
-  padding: 0 20px;
-}
-.timeline-head {
-  text-align: center; margin-bottom: 50px;
-}
-.timeline-head h2 {
-  font-size: clamp(22px, 3vw, 30px); font-weight: 300;
-  color: var(--accent-warm);
-}
-.phases-container {
-  position: relative;
-  padding: 20px 0;
-}
-.phases-container::before {
-  content: ''; position: absolute; top: 50%; left: 0; right: 0;
-  height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  transform: translateY(-50%); opacity: 0.4;
-}
+.timeline-wrap { max-width: 1100px; margin: 0 auto 100px; padding: 0 20px; }
+.timeline-head { text-align: center; margin-bottom: 50px; }
+.timeline-head h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 300; color: var(--accent-warm); }
 .phases-grid {
   display: grid; gap: 16px;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  position: relative;
 }
 .phase-item {
-  background: var(--bg-deep);
-  border: 1px solid rgba(0,217,255,0.15);
+  background: var(--bg-deep); border: 1px solid rgba(0,217,255,0.15);
   padding: 18px 16px; border-radius: 12px;
-  opacity: 0; transform: translateX(-40px);
-  transition: all 0.6s ease;
-  transition-delay: calc(var(--i) * 0.12s);
+  animation: slideIn 0.7s ease both;
+  animation-delay: calc(var(--i) * 0.1s);
 }
-.phase-item.in-view { opacity: 1; transform: translateX(0); }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 .phase-marker {
   display: inline-block; background: var(--accent); color: var(--bg-deep);
   font-weight: 700; font-size: 11px; letter-spacing: 0.1em;
@@ -299,12 +273,8 @@ body.unlocked #layer-indicator { opacity: 1; }
   max-width: 700px; margin: 0 auto 80px;
   text-align: center; padding: 50px 30px;
   background: radial-gradient(ellipse at center, rgba(0,217,255,0.08) 0%, transparent 70%);
-  border: 1px solid rgba(0,217,255,0.18);
-  border-radius: 20px;
-  opacity: 0; transform: scale(0.9);
-  transition: all 0.8s ease;
+  border: 1px solid rgba(0,217,255,0.18); border-radius: 20px;
 }
-.metric-hero.in-view { opacity: 1; transform: scale(1); }
 .metric-label { font-size: 11px; letter-spacing: 0.3em; color: var(--muted); margin-bottom: 16px; }
 .metric-value {
   font-size: clamp(32px, 5vw, 48px); font-weight: 200;
@@ -326,56 +296,338 @@ body.unlocked #layer-indicator { opacity: 1; }
 .stake-item strong { display: block; font-size: 12px; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 6px; }
 .stake-item span { font-size: 14px; color: var(--text); }
 
-/* ============ LAYER 3: DEPTH ============ */
+/* ============ LAYER 3 (NEW): ATMOSPHÄRE ============ */
 #layer3 {
   position: relative; z-index: 2;
+  background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-atmos) 50%, var(--bg-deep) 100%);
+  padding: 120px 20px 140px;
+  overflow: hidden;
+}
+#layer3::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(600px 400px at 20% 30%, rgba(107,206,127,0.08), transparent),
+    radial-gradient(500px 300px at 80% 70%, rgba(200,158,106,0.08), transparent);
+}
+
+.atmos-words {
+  text-align: center; margin: 0 auto 80px; max-width: 900px;
+  font-size: clamp(14px, 1.8vw, 18px); color: var(--accent-green);
+  letter-spacing: 0.15em; font-weight: 300; font-style: italic;
+}
+
+/* Subsection headers */
+.subsection {
+  max-width: 1100px; margin: 0 auto 100px;
+}
+.subsection-head {
+  text-align: center; margin-bottom: 48px;
+}
+.subsection-kicker {
+  font-size: 11px; letter-spacing: 0.3em; color: var(--accent-green);
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.subsection-title {
+  font-size: clamp(26px, 3.5vw, 36px); font-weight: 200;
+}
+.subsection-title strong { color: var(--accent-warm); font-weight: 400; }
+.subsection-lead {
+  max-width: 640px; margin: 14px auto 0;
+  font-size: 15px; color: var(--muted);
+}
+
+/* Phyto timeline */
+.phyto-grid {
+  display: grid; gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.phyto-phase {
+  background: rgba(107,206,127,0.05);
+  border: 1px solid rgba(107,206,127,0.25);
+  padding: 24px 22px; border-radius: 16px;
+  position: relative;
+  animation: rise 0.8s ease both;
+  animation-delay: calc(var(--i) * 0.15s);
+}
+.phyto-phase::before {
+  content: '🌱'; position: absolute; top: -14px; left: 24px;
+  background: var(--bg-atmos); padding: 0 8px; font-size: 20px;
+}
+.phyto-year {
+  font-size: 12px; letter-spacing: 0.2em; color: var(--accent-green);
+  font-weight: 600; margin-bottom: 14px;
+}
+.phyto-species { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.sp-chip {
+  background: rgba(107,206,127,0.12); color: var(--accent-green);
+  padding: 4px 10px; border-radius: 20px; font-size: 11px;
+  font-style: italic; border: 1px solid rgba(107,206,127,0.25);
+}
+.phyto-target, .phyto-visible {
+  font-size: 13px; margin-bottom: 10px; color: var(--text);
+}
+.phyto-target .lbl, .phyto-visible .lbl {
+  display: block; font-size: 9px; letter-spacing: 0.2em;
+  color: var(--muted); margin-bottom: 2px;
+}
+
+/* Trees */
+.trees-grid {
+  display: grid; gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.tree-card {
+  background: linear-gradient(135deg, rgba(200,158,106,0.06) 0%, rgba(107,206,127,0.04) 100%);
+  border: 1px solid rgba(200,158,106,0.25);
+  padding: 24px 22px; border-radius: 16px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: rise 0.8s ease both;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+.tree-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(200,158,106,0.18);
+}
+.tree-species {
+  font-size: 16px; font-weight: 500; color: var(--accent-earth);
+  font-style: italic; margin-bottom: 6px;
+}
+.tree-zone { font-size: 11px; color: var(--muted); margin-bottom: 16px; letter-spacing: 0.08em; }
+.tree-stats {
+  display: flex; gap: 16px; margin-bottom: 16px;
+  padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.tree-stats > div { flex: 1; }
+.tree-stats strong {
+  display: block; font-size: 24px; font-weight: 300;
+  color: var(--accent-warm); line-height: 1;
+}
+.tree-stats span { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.tree-uses { font-size: 12px; color: var(--accent-green); margin-bottom: 12px; }
+.tree-fit { font-size: 13px; color: var(--text); line-height: 1.55; }
+
+/* Cascade */
+.cascade-flow {
+  max-width: 900px; margin: 0 auto; padding: 30px;
+  background: rgba(0,0,0,0.2); border-radius: 20px;
+  border: 1px solid rgba(107,206,127,0.18);
+}
+.casc-step {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  animation: rise 0.7s ease both;
+}
+.casc-step:last-child { border-bottom: none; }
+.casc-num {
+  flex-shrink: 0; width: 28px; height: 28px;
+  background: var(--accent-green); color: var(--bg-deep);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px;
+}
+
+/* KPIs */
+.kpi-list {
+  max-width: 900px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.kpi-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;
+  padding: 18px 22px; background: rgba(255,255,255,0.02);
+  border-left: 3px solid var(--accent-green); border-radius: 0 12px 12px 0;
+}
+.kpi-label { font-size: 14px; color: var(--text); }
+.kpi-progression { display: flex; gap: 16px; }
+.kpi-mark { text-align: center; min-width: 55px; }
+.kpi-mark span { display: block; font-size: 9px; color: var(--muted); letter-spacing: 0.2em; }
+.kpi-mark strong { font-size: 16px; color: var(--accent-warm); font-weight: 500; }
+
+/* Wooden Structures */
+.structures-grid {
+  display: grid; gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.structure-card {
+  background:
+    linear-gradient(135deg, rgba(200,158,106,0.07) 0%, rgba(107,206,127,0.04) 100%),
+    repeating-linear-gradient(90deg, transparent 0 3px, rgba(200,158,106,0.04) 3px 4px);
+  border: 1px solid rgba(200,158,106,0.3);
+  padding: 26px 24px; border-radius: 14px;
+  position: relative; overflow: hidden;
+  transition: all 0.4s ease;
+  animation: rise 0.8s ease both;
+  animation-delay: calc(var(--i) * 0.08s);
+}
+.structure-card:hover {
+  transform: translateY(-6px) rotate(-0.3deg);
+  border-color: var(--accent-warm);
+  box-shadow: 0 20px 50px rgba(200,158,106,0.2);
+}
+.structure-name {
+  font-size: 20px; font-weight: 500; color: var(--accent-warm);
+  margin-bottom: 10px;
+}
+.structure-func {
+  font-size: 14px; color: var(--text); line-height: 1.55;
+  margin-bottom: 16px;
+}
+.structure-meta {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.meta-chip {
+  background: rgba(200,158,106,0.12); color: var(--accent-earth);
+  padding: 4px 10px; border-radius: 20px; font-size: 11px;
+  border: 1px solid rgba(200,158,106,0.2);
+}
+
+/* Experience Rooms */
+.rooms-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.room-card {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 22px 20px; border-radius: 14px; position: relative;
+  transition: all 0.4s ease;
+  animation: rise 0.7s ease both;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+.room-card:hover {
+  background: rgba(0,217,255,0.03);
+  border-color: rgba(0,217,255,0.3);
+  transform: translateY(-4px);
+}
+.room-principle {
+  display: inline-block;
+  background: rgba(0,217,255,0.12); color: var(--accent);
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.room-name {
+  font-size: 17px; font-weight: 500; color: var(--accent-warm);
+  margin-bottom: 10px;
+}
+.room-sensory {
+  font-size: 13px; color: var(--text); font-style: italic;
+  margin-bottom: 12px; line-height: 1.5;
+}
+.room-transform { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.room-transform .lbl {
+  display: inline-block; color: var(--accent-green);
+  font-weight: 600; margin-right: 6px;
+}
+.room-duration {
+  font-size: 11px; color: var(--accent); letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;
+}
+
+/* Bridge + Exhibition side-by-side */
+.bridge-exhibition {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px; max-width: 1100px; margin: 0 auto;
+}
+.bridge-card, .exhibition-card {
+  background: linear-gradient(135deg, rgba(0,217,255,0.04) 0%, rgba(107,206,127,0.06) 100%);
+  border: 1px solid rgba(107,206,127,0.2);
+  padding: 32px; border-radius: 18px;
+}
+.bridge-card h3, .exhibition-card h3 {
+  font-size: 22px; color: var(--accent-warm); font-weight: 300;
+  margin-bottom: 16px;
+}
+.bridge-card .ritual-moment {
+  font-size: 16px; color: var(--text); font-style: italic;
+  padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08); margin: 18px 0;
+}
+.bridge-meta, .exh-meta {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
+}
+.detail-chip {
+  background: rgba(107,206,127,0.1); color: var(--accent-green);
+  padding: 6px 12px; border-radius: 8px; font-size: 12px;
+  border: 1px solid rgba(107,206,127,0.2);
+}
+
+/* Rhythm */
+.rhythm-wrap {
+  max-width: 900px; margin: 60px auto 0; padding: 30px;
+  background: rgba(0,0,0,0.3); border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.rhythm-title {
+  text-align: center; font-size: 14px; color: var(--muted);
+  letter-spacing: 0.3em; margin-bottom: 24px; text-transform: uppercase;
+}
+.rhythm-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;
+}
+.rhythm-cell {
+  text-align: center; padding: 18px 14px;
+  background: rgba(255,255,255,0.02); border-radius: 12px;
+}
+.rhythm-cell strong {
+  display: block; font-size: 11px; color: var(--accent); letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+.rhythm-cell span { font-size: 13px; color: var(--text); }
+
+/* ============ LAYER 4: DEPTH (ENGINES) — FIXED ============ */
+#layer4 {
+  position: relative; z-index: 2;
   background: var(--bg-deep);
-  padding: 140px 20px 80px;
+  padding: 120px 20px 80px;
 }
 .depth-intro {
-  max-width: 700px; margin: 0 auto 80px;
-  text-align: center;
+  max-width: 700px; margin: 0 auto 80px; text-align: center;
 }
-.depth-sections {
-  max-width: 1000px; margin: 0 auto;
-}
+.depth-sections { max-width: 1000px; margin: 0 auto; }
 .depth-section {
-  margin-bottom: 80px; padding: 40px 32px;
+  margin-bottom: 50px; padding: 40px 32px;
   background: rgba(255,255,255,0.015);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 20px;
-  opacity: 0; transform: translateY(60px);
-  transition: all 0.9s cubic-bezier(0.2, 0.9, 0.3, 1);
+  animation: depthRise 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 30%;
 }
-.depth-section.in-view { opacity: 1; transform: translateY(0); }
-.depth-section.from-left { transform: translateX(-60px); }
-.depth-section.from-left.in-view { transform: translateX(0); }
-.depth-section.from-right { transform: translateX(60px); }
-.depth-section.from-right.in-view { transform: translateX(0); }
+@keyframes depthRise {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Fallback for browsers without scroll-timeline */
+@supports not (animation-timeline: view()) {
+  .depth-section { animation: none; opacity: 1; transform: none; }
+  .depth-section.will-animate {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .depth-section.will-animate.visible { opacity: 1; transform: translateY(0); }
+}
 
-.depth-section h2 {
-  font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 8px; font-weight: 600;
+.depth-section h2.section-kicker {
+  font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 6px; font-weight: 600;
 }
 .depth-section .sub {
   font-size: 22px; font-weight: 300; color: var(--accent-warm);
   margin-bottom: 24px;
 }
-.depth-section h3 { color: var(--accent-warm); font-weight: 500; margin: 24px 0 12px; font-size: 18px; }
+.depth-section h2 { color: var(--accent-warm); font-weight: 400; margin: 20px 0 12px; font-size: 20px; }
+.depth-section h3 { color: var(--accent-warm); font-weight: 500; margin: 20px 0 10px; font-size: 17px; }
 .depth-section p { margin: 10px 0; color: var(--text); }
-.depth-section ul, .depth-section ol { margin: 12px 0 12px 24px; }
-.depth-section li { margin: 6px 0; color: var(--text); }
+.depth-section ul, .depth-section ol { margin: 10px 0 10px 24px; }
+.depth-section li { margin: 4px 0; color: var(--text); }
 .depth-section strong { color: var(--accent-warm); }
 
 .persona-card {
-  background: rgba(0,0,0,0.3); padding: 24px 28px; border-radius: 14px;
-  margin-bottom: 22px; border-left: 3px solid var(--accent);
-  opacity: 0; transform: translateY(30px);
-  transition: all 0.7s ease;
+  background: rgba(0,0,0,0.3); padding: 22px 26px; border-radius: 14px;
+  margin-bottom: 18px; border-left: 3px solid var(--accent);
 }
-.persona-card.in-view { opacity: 1; transform: translateY(0); }
 .persona-card h3 { color: var(--accent-warm); margin: 0 0 6px; font-size: 17px; font-weight: 600; }
-.persona-role { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+.persona-role { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
 
 footer {
   text-align: center; padding: 40px 20px 60px;
@@ -392,28 +644,29 @@ footer .engine-tag {
   color: var(--accent); letter-spacing: 0.15em;
 }
 
-/* ============ DEPTH SWITCH BAR ============ */
+/* ============ DEPTH SWITCH BAR (4 BUTTONS) ============ */
 .depth-switch {
   position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-  z-index: 100; display: flex; gap: 8px;
-  background: rgba(10,14,23,0.85); backdrop-filter: blur(12px);
+  z-index: 100; display: flex; gap: 6px;
+  background: rgba(10,14,23,0.88); backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.1); border-radius: 40px;
   padding: 8px; opacity: 0; transition: opacity 0.8s ease 1.5s;
+  max-width: 95vw; overflow-x: auto;
 }
 body.unlocked .depth-switch { opacity: 1; }
 .depth-btn {
   background: transparent; border: none; color: var(--muted);
-  font-family: inherit; font-size: 11px; letter-spacing: 0.2em;
-  text-transform: uppercase; padding: 10px 22px; border-radius: 30px;
-  cursor: pointer; transition: all 0.3s ease;
+  font-family: inherit; font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; padding: 10px 16px; border-radius: 30px;
+  cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
 }
 .depth-btn.active { background: var(--accent); color: var(--bg-deep); font-weight: 600; }
 .depth-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.05); }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   #layer-indicator { left: 14px; }
-  .depth-switch { bottom: 16px; }
-  .depth-btn { padding: 8px 14px; font-size: 10px; }
+  .depth-switch { bottom: 16px; padding: 6px; }
+  .depth-btn { padding: 7px 10px; font-size: 10px; letter-spacing: 0.12em; }
 }
 </style>
 </head>
@@ -430,21 +683,22 @@ body.unlocked .depth-switch { opacity: 1; }
   </div>
 </div>
 
-<!-- BACKGROUND STARFIELD -->
 <div class="starfield"></div>
 
-<!-- LAYER INDICATOR (left side dots) -->
+<!-- LAYER INDICATOR -->
 <div id="layer-indicator">
   <div class="li-dot active" data-target="layer1"><span class="li-label">Signal</span></div>
   <div class="li-dot" data-target="layer2"><span class="li-label">Struktur</span></div>
-  <div class="li-dot" data-target="layer3"><span class="li-label">Tiefe</span></div>
+  <div class="li-dot" data-target="layer3"><span class="li-label">Atmosphäre</span></div>
+  <div class="li-dot" data-target="layer4"><span class="li-label">Tiefe</span></div>
 </div>
 
 <!-- DEPTH SWITCH -->
 <div class="depth-switch">
   <button class="depth-btn active" data-target="layer1">1 · Signal</button>
   <button class="depth-btn" data-target="layer2">2 · Struktur</button>
-  <button class="depth-btn" data-target="layer3">3 · Tiefe</button>
+  <button class="depth-btn" data-target="layer3">3 · Atmosphäre</button>
+  <button class="depth-btn" data-target="layer4">4 · Tiefe</button>
 </div>
 
 <!-- LAYER 1: SIGNAL -->
@@ -463,13 +717,12 @@ body.unlocked .depth-switch { opacity: 1; }
   <div class="scroll-hint">↓ Tiefer</div>
 </section>
 
-<!-- LAYER 2: MEDIUM -->
+<!-- LAYER 2: STRUKTUR -->
 <section id="layer2">
   <div class="layer-label">Schicht 02 · Struktur</div>
   <h2 class="layer-title">Die <strong>3 Prinzipien</strong>, die alles tragen</h2>
 
   <div class="principles-grid">
-    
     <div class="principle-card" style="--i: 0">
       <div class="principle-num">01</div>
       <h3>LOKALE SOUVERÄNITÄT</h3>
@@ -490,67 +743,50 @@ body.unlocked .depth-switch { opacity: 1; }
       <p class="claim">Alle Jobs führen innerhalb von 18 Monaten zur nächsten Qualifikationsstufe.</p>
       <p class="action"><span class="action-label">HANDLUNG</span> Rotationsprogramme mit Zertifizierung etablieren, keine dauerhaften Service-Positionen erlauben</p>
     </div>
-    
-  </div>
+    </div>
 
   <div class="timeline-wrap">
-    <div class="timeline-head">
-      <h2>Phasen-Architektur</h2>
-    </div>
-    <div class="phases-container">
-      <div class="phases-grid">
-        
+    <div class="timeline-head"><h2>Phasen-Architektur</h2></div>
+    <div class="phases-grid">
     <div class="phase-item" style="--i: 0">
       <div class="phase-marker">P0</div>
-      <div class="phase-body">
-        <div class="phase-label">Community Due Diligence</div>
-        <div class="phase-duration">9 Monate</div>
-        <div class="phase-delivers">Rechtskläre Landtitel und Community-Mandat</div>
-        <div class="phase-gate">⚠ Unter 60% Zustimmung oder unlösbare Landrechtsstreitigkeiten</div>
-      </div>
+      <div class="phase-label">Community Due Diligence</div>
+      <div class="phase-duration">9 Monate</div>
+      <div class="phase-delivers">Rechtskläre Landtitel und Community-Mandat</div>
+      <div class="phase-gate">⚠ Unter 60% Zustimmung oder unlösbare Landrechtsstreitigkeiten</div>
     </div>
     
     <div class="phase-item" style="--i: 1">
       <div class="phase-marker">P1</div>
-      <div class="phase-body">
-        <div class="phase-label">Foundation</div>
-        <div class="phase-duration">15 Monate</div>
-        <div class="phase-delivers">Basis-Infrastruktur und erste Sanierungsmaßnahmen etabliert</div>
-        <div class="phase-gate">⚠ Infrastrukturkosten über 130% oder Governance-Konflikte</div>
-      </div>
+      <div class="phase-label">Foundation</div>
+      <div class="phase-duration">15 Monate</div>
+      <div class="phase-delivers">Basis-Infrastruktur und erste Sanierungsmaßnahmen etabliert</div>
+      <div class="phase-gate">⚠ Infrastrukturkosten über 130% oder Governance-Konflikte</div>
     </div>
     
     <div class="phase-item" style="--i: 2">
       <div class="phase-marker">P2</div>
-      <div class="phase-body">
-        <div class="phase-label">Dual Operation</div>
-        <div class="phase-duration">3 Jahre</div>
-        <div class="phase-delivers">Bildungstourismus parallel zu aktiver Renaturierung</div>
-        <div class="phase-gate">⚠ Negative Öko-Bilanz oder Community-Ausbeutungsvorwürfe</div>
-      </div>
+      <div class="phase-label">Dual Operation</div>
+      <div class="phase-duration">3 Jahre</div>
+      <div class="phase-delivers">Bildungstourismus parallel zu aktiver Renaturierung</div>
+      <div class="phase-gate">⚠ Negative Öko-Bilanz oder Community-Ausbeutungsvorwürfe</div>
     </div>
     
     <div class="phase-item" style="--i: 3">
       <div class="phase-marker">P3</div>
-      <div class="phase-body">
-        <div class="phase-label">Kreislaufwirtschaft-Integration</div>
-        <div class="phase-duration">5 Jahre</div>
-        <div class="phase-delivers">Urban Mining-Hub mit regionaler Veredelungskette</div>
-        <div class="phase-gate">⚠ Recycling-Betrieb unrentabel oder Compliance-Verstoß</div>
-      </div>
+      <div class="phase-label">Kreislaufwirtschaft-Integration</div>
+      <div class="phase-duration">5 Jahre</div>
+      <div class="phase-delivers">Urban Mining-Hub mit regionaler Veredelungskette</div>
+      <div class="phase-gate">⚠ Recycling-Betrieb unrentabel oder Compliance-Verstoß</div>
     </div>
     
     <div class="phase-item" style="--i: 4">
       <div class="phase-marker">P4</div>
-      <div class="phase-body">
-        <div class="phase-label">Wissensexport</div>
-        <div class="phase-duration">5 Jahre</div>
-        <div class="phase-delivers">Modell-Franchising und internationale Trainings-Academy</div>
-        <div class="phase-gate">⚠ Mangelnde Nachfrage oder Community-Desinteresse</div>
-      </div>
+      <div class="phase-label">Wissensexport</div>
+      <div class="phase-duration">5 Jahre</div>
+      <div class="phase-delivers">Modell-Franchising und internationale Trainings-Academy</div>
+      <div class="phase-gate">⚠ Mangelnde Nachfrage oder Community-Desinteresse</div>
     </div>
-    
-      </div>
     </div>
   </div>
 
@@ -560,14 +796,344 @@ body.unlocked .depth-switch { opacity: 1; }
     <div class="metric-context">Misst tatsächliche Heilung statt nur vermiedener Schäden durch Schwermetall-Reduktion, Artenzahl-Steigerung und Wasserreinheit</div>
   </div>
 
-  <div class="stakeholder-wins">
-    <div class="stake-item"><strong>Staat</strong><span>Infrastruktur dual-use und Minen-Rehabilitations-Modellprojekt</span></div><div class="stake-item"><strong>Region</strong><span>140 Arbeitsplätze über 10 Jahre</span></div><div class="stake-item"><strong>Einwohner</strong><span>Eigentumsanteile und demokratische Kontrolle mit Qualifizierung</span></div><div class="stake-item"><strong>Besucher</strong><span>Sinnstiftende Lern-Erfahrung durch aktive Heilungsarbeit</span></div>
+  <div class="stakeholder-wins"><div class="stake-item"><strong>Staat</strong><span>Infrastruktur dual-use und Minen-Rehabilitations-Modellprojekt</span></div><div class="stake-item"><strong>Region</strong><span>140 Arbeitsplätze über 10 Jahre</span></div><div class="stake-item"><strong>Einwohner</strong><span>Eigentumsanteile und demokratische Kontrolle mit Qualifizierung</span></div><div class="stake-item"><strong>Besucher</strong><span>Sinnstiftende Lern-Erfahrung durch aktive Heilungsarbeit</span></div></div>
+</section>
+
+<!-- LAYER 3: ATMOSPHÄRE (NEW) -->
+<section id="layer3">
+  <div class="layer-label">Schicht 03 · Atmosphäre</div>
+  <h2 class="layer-title">Der Ort, den <strong>Besucher betreten</strong></h2>
+  <div class="atmos-words">Ehrfürchtige Funktionalität · Schwitzendes Holz · Gewollte Langsamkeit · Kompetenz als Erotik · Dreck unter Fingernägeln</div>
+
+  <!-- SOIL: Phytoremediation -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">01 · Boden-Rekultivierung</div>
+      <div class="subsection-title">Die <strong>Pflanzen-Kaskade</strong> entgiftet das Land</div>
+      <p class="subsection-lead">4 Phasen über 12 Jahre: Hyperakkumulatoren → Sträucher → Biomasse-Bäume → junger Mischwald. Besucher sieht die Transformation in Echtzeit über Jahre.</p>
+    </div>
+    <div class="phyto-grid">
+    <div class="phyto-phase" style="--i: 0">
+      <div class="phyto-year">Jahr 0-2</div>
+      <div class="phyto-species"><span class="sp-chip">Brassica juncea (Indischer Senf)</span><span class="sp-chip">Thlaspi caerulescens (Hellerkraut)</span><span class="sp-chip">Helianthus annuus (Sonnenblume)</span></div>
+      <div class="phyto-target"><span class="lbl">Ziel</span> Zink, Kadmium, Blei-Mobilisierung aus oberen 30cm</div>
+      <div class="phyto-visible"><span class="lbl">Sichtbar</span> Gelbe Blütenfelder, 3-4 Ernten/Jahr, Biomasse wird verbrannt/deponiert</div>
+    </div>
+    
+    <div class="phyto-phase" style="--i: 1">
+      <div class="phyto-year">Jahr 3-5</div>
+      <div class="phyto-species"><span class="sp-chip">Salix viminalis (Korbweide)</span><span class="sp-chip">Alnus glutinosa (Schwarzerle)</span><span class="sp-chip">Lupinus albus (Weiße Lupine)</span></div>
+      <div class="phyto-target"><span class="lbl">Ziel</span> Schwermetall-Akkumulation + N-Fixierung, Bodenstruktur-Aufbau</div>
+      <div class="phyto-visible"><span class="lbl">Sichtbar</span> Niedrige Strauchlandschaft, erste Gehölzstrukturen, Vogel-Rückkehr</div>
+    </div>
+    
+    <div class="phyto-phase" style="--i: 2">
+      <div class="phyto-year">Jahr 6-9</div>
+      <div class="phyto-species"><span class="sp-chip">Populus nigra Hybriden</span><span class="sp-chip">Robinia pseudoacacia</span><span class="sp-chip">Miscanthus x giganteus</span></div>
+      <div class="phyto-target"><span class="lbl">Ziel</span> Tiefenwurzeln für Schwermetalle 50-100cm, massive Biomasse-Produktion</div>
+      <div class="phyto-visible"><span class="lbl">Sichtbar</span> 5-8m hohe Baumgruppen, dichte Grasbestände, erste Waldatmosphäre</div>
+    </div>
+    
+    <div class="phyto-phase" style="--i: 3">
+      <div class="phyto-year">Jahr 10-12</div>
+      <div class="phyto-species"><span class="sp-chip">Paulownia tomentosa</span><span class="sp-chip">Quercus robur (Stieleiche)</span><span class="sp-chip">Corylus avellana (Haselnuss)</span></div>
+      <div class="phyto-target"><span class="lbl">Ziel</span> Finalisierung Schwermetall-Bindung, Humusaufbau, Biodiversität</div>
+      <div class="phyto-visible"><span class="lbl">Sichtbar</span> Junger Mischwald 10-15m, Unterholz, nutzbarer Erholungsraum</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- TREES: Fast-growing raw material -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">02 · Schnellwachsende Bäume · Rohstoff</div>
+      <div class="subsection-title">Holz aus dem <strong>ehemaligen Minenboden</strong></div>
+      <p class="subsection-lead">Nicht nur Ökologie — echter Wirtschaftsrohstoff. Paulownia baut 15m³/ha/Jahr auf, Miscanthus 25m³. Nach 5-10 Jahren wird daraus das Festival gebaut.</p>
+    </div>
+    <div class="trees-grid">
+    <div class="tree-card" style="--i: 0">
+      <div class="tree-species">Paulownia tomentosa</div>
+      <div class="tree-zone">gemäßigt-warm (Zone 6-10), Tropen bis 1800m</div>
+      <div class="tree-stats">
+        <div><strong>15</strong><span>m³/ha/Jahr</span></div>
+        <div><strong>7</strong><span>Jahre Zyklus</span></div>
+      </div>
+      <div class="tree-uses">Leichtbauholz · Möbel · Surfboards · Biokohle</div>
+      <div class="tree-fit">Toleriert verdichtete Böden, pH 4.5-8.5, Wurzeln brechen Hardpan, fixiert 103t CO₂/ha in 7 Jahren</div>
+    </div>
+    
+    <div class="tree-card" style="--i: 1">
+      <div class="tree-species">Robinia pseudoacacia</div>
+      <div class="tree-zone">gemäßigt (Zone 4-8)</div>
+      <div class="tree-stats">
+        <div><strong>12</strong><span>m³/ha/Jahr</span></div>
+        <div><strong>10</strong><span>Jahre Zyklus</span></div>
+      </div>
+      <div class="tree-uses">Bauholz (Resistenzklasse 1) · Pfähle · Parkett · Bienenweide</div>
+      <div class="tree-fit">Wächst auf Abraumhalden, extrem trockenheitsresistent, saniert saure Böden (pH 4-8), Pfahlwurzeln bis 3m</div>
+    </div>
+    
+    <div class="tree-card" style="--i: 2">
+      <div class="tree-species">Populus maximowiczii x trichocarpa Hybride</div>
+      <div class="tree-zone">gemäßigt-kalt (Zone 3-7)</div>
+      <div class="tree-stats">
+        <div><strong>20</strong><span>m³/ha/Jahr</span></div>
+        <div><strong>5</strong><span>Jahre Zyklus</span></div>
+      </div>
+      <div class="tree-uses">Spanplatten · Pellets · Zellstoff · Verpackung</div>
+      <div class="tree-fit">Phytoextrahiert Zink/Kadmium in Blätter, hohe Transpiration reinigt Grundwasser, toleriert Staunässe</div>
+    </div>
+    
+    <div class="tree-card" style="--i: 3">
+      <div class="tree-species">Miscanthus x giganteus</div>
+      <div class="tree-zone">gemäßigt-subtropisch (Zone 5-9)</div>
+      <div class="tree-stats">
+        <div><strong>25</strong><span>m³/ha/Jahr</span></div>
+        <div><strong>1</strong><span>Jahre Zyklus</span></div>
+      </div>
+      <div class="tree-uses">Verbrennung (17-19 MJ/kg) · Dämmstoff · Biokohle · Tiereinstreu</div>
+      <div class="tree-fit">Rhizome stabilisieren Erosionshänge, benötigt minimale Nährstoffe, 15 Jahre ohne Neuansaat, Metallakkumulation in Blättern</div>
+    </div>
+    
+    <div class="tree-card" style="--i: 4">
+      <div class="tree-species">Bambusa oldhamii / Phyllostachys edulis</div>
+      <div class="tree-zone">subtropisch-tropisch (Zone 7-11)</div>
+      <div class="tree-stats">
+        <div><strong>30</strong><span>m³/ha/Jahr</span></div>
+        <div><strong>4</strong><span>Jahre Zyklus</span></div>
+      </div>
+      <div class="tree-uses">Baugerüste · Möbel · Biokomposit · Textilfaser</div>
+      <div class="tree-fit">Wurzeln bis 60cm verdichten lockere Minen-Böden, wächst auf pH 4-8, 35% höhere CO₂-Bindung als Laubbäume</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- CASCADE -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">03 · Kreislauf</div>
+      <div class="subsection-title">Vom Gift zum <strong>Wirtschaftsgut</strong></div>
+      <p class="subsection-lead">Kaskadennutzung: jede Produktions-Etage speist die nächste. Jahres-Biomasse 18-25t/ha trocken ab Jahr 6, Kreislauf-Schluss nach 7 Jahren.</p>
+    </div>
+    <div class="cascade-flow"><div class="casc-step"><span class="casc-num">1</span><span>Jahre 1-2: Hyperakkumulatoren ernten, Biomasse zu Sondermüll oder thermische Metallrückgewinnung (Zn, Cu)</span></div><div class="casc-step"><span class="casc-num">2</span><span>Jahre 3-5: Weiden-Ruten für Flechtwerk, Erosionsmatten, Kompostierung N-reicher Lupinen → Bodenverbesserung</span></div><div class="casc-step"><span class="casc-num">3</span><span>Jahre 6-9: Miscanthus-Ernte → 50% Verbrennung (lokale Energie), 50% Pyrolyse zu Biokohle → Einarbeitung +30% WHK</span></div><div class="casc-step"><span class="casc-num">4</span><span>Jahre 10+: Paulownia-Stammholz → Leichtbauten/Möbel vor Ort, Kronenmaterial → Hackschnitzel → Biokohle → Bodenaufwertung</span></div><div class="casc-step"><span class="casc-num">5</span><span>Ab Jahr 12: Robinie → Bauholz (Zäune, Spielplätze auf rekultiviertem Gelände), Miscanthus-Loop als Dauerkultur für Energieautarkie</span></div></div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">04 · Messbare Heilung</div>
+      <div class="subsection-title">Die <strong>harten Zahlen</strong> der Regeneration</div>
+    </div>
+    <div class="kpi-list">
+    <div class="kpi-row">
+      <div class="kpi-label">Schwermetall-Reduktion Boden (Zn, Pb, Cd verfügbar)</div>
+      <div class="kpi-progression">
+        <div class="kpi-mark"><span>J5</span><strong>40%</strong></div>
+        <div class="kpi-mark"><span>J10</span><strong>75%</strong></div>
+        <div class="kpi-mark"><span>J15</span><strong>90%</strong></div>
+      </div>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-label">Kohlenstoffbindung (t CO₂ eq/ha kumulativ)</div>
+      <div class="kpi-progression">
+        <div class="kpi-mark"><span>J5</span><strong>85</strong></div>
+        <div class="kpi-mark"><span>J10</span><strong>320</strong></div>
+        <div class="kpi-mark"><span>J15</span><strong>580</strong></div>
+      </div>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-label">Holz-Biomasse Ertrag (m³/ha/Jahr verkaufsfähig)</div>
+      <div class="kpi-progression">
+        <div class="kpi-mark"><span>J5</span><strong>8</strong></div>
+        <div class="kpi-mark"><span>J10</span><strong>18</strong></div>
+        <div class="kpi-mark"><span>J15</span><strong>22</strong></div>
+      </div>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-label">Wasserrückhaltevermögen Boden (mm Niederschlag)</div>
+      <div class="kpi-progression">
+        <div class="kpi-mark"><span>J5</span><strong>45</strong></div>
+        <div class="kpi-mark"><span>J10</span><strong>95</strong></div>
+        <div class="kpi-mark"><span>J15</span><strong>140</strong></div>
+      </div>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-label">Organische Bodensubstanz (%)</div>
+      <div class="kpi-progression">
+        <div class="kpi-mark"><span>J5</span><strong>1.8</strong></div>
+        <div class="kpi-mark"><span>J10</span><strong>4.2</strong></div>
+        <div class="kpi-mark"><span>J15</span><strong>6.5</strong></div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- WOODEN STRUCTURES -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">05 · Holzbauten</div>
+      <div class="subsection-title">6 Strukturen — aus <strong>selbst gepflanztem Holz</strong></div>
+      <p class="subsection-lead">Kein Zelt-Festival, kein Disney-Kulissen. Bauten, die atmen, altern und riechen. Referenzen: Kengo Kuma, Burning Man, japanische Tempelarchitektur.</p>
+    </div>
+    <div class="structures-grid">
+    <div class="structure-card" style="--i: 0">
+      <div class="structure-name">Ankunfts-Portal</div>
+      <div class="structure-func">Schwellenraum zwischen Außenwelt und Mine-Territorium, akustische Isolation durch doppelwandige Holzkonstruktion</div>
+      <div class="structure-meta">
+        <span class="meta-chip">◆ Alvar Aalto Pavillon + Serpentine Pavilion 2019 (Junya Ishigami)</span>
+        <span class="meta-chip">⛩ Lärche vertikal geschichtet, unbehandelt verwitternd</span>
+        <span class="meta-chip">◉ 15 Personen (Durchgangsraum)</span>
+      </div>
+    </div>
+    
+    <div class="structure-card" style="--i: 1">
+      <div class="structure-name">Skill-Kathedrale</div>
+      <div class="structure-func">Werkstatt-Arena mit 9m Deckenhöhe, wo Meister demonstrieren und 50 Besucher kreisförmig zuschauen/mitmachen</div>
+      <div class="structure-meta">
+        <span class="meta-chip">◆ Peter Zumthor Serpentine 2011 + japanische Sake-Brauerei-Architektur</span>
+        <span class="meta-chip">⛩ Douglasie-Leimbinder, Paulownia-Akustikpaneele</span>
+        <span class="meta-chip">◉ 50 Personen + 3 Meister-Stationen</span>
+      </div>
+    </div>
+    
+    <div class="structure-card" style="--i: 2">
+      <div class="structure-name">Spiegel-Sauna</div>
+      <div class="structure-func">Rauchsauna mit Außenbad-Zugang zum Fluss, Kontemplations-Architektur für Übergangsritual</div>
+      <div class="structure-meta">
+        <span class="meta-chip">◆ Finnische Rauchsaunen + Olafur Eliasson Lichtinstallationen</span>
+        <span class="meta-chip">⛩ Robinie (hitzefest) innen, Lärche außen, kupfergedeckt</span>
+        <span class="meta-chip">◉ 12 Personen pro Session</span>
+      </div>
+    </div>
+    
+    <div class="structure-card" style="--i: 3">
+      <div class="structure-name">Speicher-Turm</div>
+      <div class="structure-func">7-stöckige vertikale Bibliothek für Skill-Archive, jede Etage andere Handwerks-Familie, Aussicht oben</div>
+      <div class="structure-meta">
+        <span class="meta-chip">◆ Carlo Scarpa Brion-Friedhof + burning man Tempel-Türme</span>
+        <span class="meta-chip">⛩ Paulownia (leicht für Höhe), Robinie-Treppen</span>
+        <span class="meta-chip">◉ 8 Personen gleichzeitig (verteilt)</span>
+      </div>
+    </div>
+    
+    <div class="structure-card" style="--i: 4">
+      <div class="structure-name">Feuer-Ring</div>
+      <div class="structure-func">Offene Kreisstruktur mit zentralem Feuerplatz, 40 Sitzplätze radial, Geschichten-Raum für Abende</div>
+      <div class="structure-meta">
+        <span class="meta-chip">◆ indigenous council circles + Burning Man Temple layout</span>
+        <span class="meta-chip">⛩ Robinie (funkenresistent), keine Wände nur Dachring</span>
+        <span class="meta-chip">◉ 40 Personen sitzend</span>
+      </div>
+    </div>
+    
+    <div class="structure-card" style="--i: 5">
+      <div class="structure-name">Myzel-Kuppel</div>
+      <div class="structure-func">Geodätische Gewächshaus-Hybrid für Pilzzucht-Demonstration und regenerative Landwirtschaft-Ausstellung</div>
+      <div class="structure-meta">
+        <span class="meta-chip">◆ Buckminster Fuller Domes + Anna Heringer Lehm-Experimente</span>
+        <span class="meta-chip">⛩ Douglasie-Gitter, Paulownia-Füllungen, lebende Fassade</span>
+        <span class="meta-chip">◉ 25 Personen</span>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE ROOMS -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">06 · Erlebnisräume</div>
+      <div class="subsection-title">5 Räume · je <strong>15 Minuten</strong> Transformation</div>
+      <p class="subsection-lead">Jeder Raum verankert in einem der 3 Prinzipien. Der Besucher kommt nicht als Konsument, sondern durchquert — und geht anders heraus.</p>
+    </div>
+    <div class="rooms-grid">
+    <div class="room-card" style="--i: 0">
+      <div class="room-principle">Souveränität</div>
+      <div class="room-name">Dunkelkammer des Vergessens</div>
+      <div class="room-sensory">Völlige Dunkelheit, nur eigener Atem, feuchter Erde-Geruch, Handtasten an rauer Robinien-Wand entlang</div>
+      <div class="room-transform"><span class="lbl">Nachher</span> Sinne neu kalibriert, externe Validierung abgelegt, innere Autorität aktiviert</div>
+      <div class="room-duration">≈ 8 min</div>
+    </div>
+    
+    <div class="room-card" style="--i: 1">
+      <div class="room-principle">Regeneration</div>
+      <div class="room-name">Wasser-Schwellen-Gang</div>
+      <div class="room-sensory">Barfuß durch 3 Temperaturzonen des Flusswassers, Steine unterschiedlicher Textur, Vogelstimmen unverstärkt</div>
+      <div class="room-transform"><span class="lbl">Nachher</span> Nervensystem runtergefahren, parasympathischer Shift spürbar in Atmung</div>
+      <div class="room-duration">≈ 12 min</div>
+    </div>
+    
+    <div class="room-card" style="--i: 2">
+      <div class="room-principle">Skill-Escalation</div>
+      <div class="room-name">Meister-Observatorium</div>
+      <div class="room-sensory">Durch Glasscheibe 3 Meister bei Präzisionsarbeit beobachten, kein Sprechen, nur Bewegung, Duft von Holzstaub und Metall</div>
+      <div class="room-transform"><span class="lbl">Nachher</span> Wertschätzung für Langsamkeit, Ehrfurcht vor 10.000-Stunden-Prinzip</div>
+      <div class="room-duration">≈ 20 min</div>
+    </div>
+    
+    <div class="room-card" style="--i: 3">
+      <div class="room-principle">Souveränität</div>
+      <div class="room-name">Atem-Turm</div>
+      <div class="room-sensory">Schmale spiralförmige Treppe aufwärts, Luftdruck-Veränderung spürbar, oben 360° Weitblick auf gesamtes Territorium</div>
+      <div class="room-transform"><span class="lbl">Nachher</span> Perspektiv-Shift von Detail zu Gesamtheit, innere Hierarchie geklärt</div>
+      <div class="room-duration">≈ 15 min</div>
+    </div>
+    
+    <div class="room-card" style="--i: 4">
+      <div class="room-principle">Skill-Escalation</div>
+      <div class="room-name">Skill-Failure-Labor</div>
+      <div class="room-sensory">Werkbank mit absichtlich schwierigem Material (hartes Holz, stumpfes Werkzeug), Sound von anderen Scheiternden, Geruch von Schweiß</div>
+      <div class="room-transform"><span class="lbl">Nachher</span> Frustrations-Toleranz erhöht, Misserfolg als Information nicht Identität</div>
+      <div class="room-duration">≈ 30 min</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- BRIDGE + EXHIBITION -->
+  <div class="subsection">
+    <div class="subsection-head">
+      <div class="subsection-kicker">07 · Fluss · Steg · Wald</div>
+      <div class="subsection-title">Die <strong>zwei zentralen Orte</strong></div>
+    </div>
+    <div class="bridge-exhibition">
+      <div class="bridge-card">
+        <h3>◡ Der Steg</h3>
+        <div class="ritual-moment">„Ankunft: trockenes Überqueren. Abreise: Steg endet mittfluss auf Plattform, von dort Sprung ins Wasser = symbolische Reinigung vor Rückkehr in Außenwelt. Kleidung bleibt auf Steg."</div>
+        <div class="bridge-meta">
+          <span class="detail-chip">Robinie (wasserresistent), schwimmende Elemente aus Paulownia, verzinkte Stahlseile als Geländer</span>
+          <span class="detail-chip">45 m</span>
+          <span class="detail-chip">Steg ganzjährig, Baden sicher Mai-September, Oktober-April Eisbad nur für Erfahrene mit Begleitung</span>
+        </div>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 14px;">Am Übergang zwischen Altholz-Wald (Phase 1) und junger Pflanzung (Phase 2), wo Fluss 12m breit und 1,2m tief, Strömung moderat · Safety: Rettungsring alle 8m, Strömungswarnsystem visuell (Flagge), Juni-August Lifeguard-Präsenz 10-18 Uhr, Schwimmwesten verfügbar aber nicht mandatory</p>
+      </div>
+      <div class="exhibition-card">
+        <h3>◯ Die Wald-Ausstellung</h3>
+        <p style="font-size: 15px; color: var(--text); margin-bottom: 14px;">Keine White-Cube-Logik, sondern ortsspezifische Interventionen die zwischen Kunst und funktionaler Infrastruktur oszillieren. Jede Installation muss eine Regenerations-Funktion erfüllen UND ästhetisch transformieren. Besucher sind Co-Mainainer, nicht nur Betrachter.</p>
+        <div class="exh-meta"><span class="detail-chip">Land-Art mit Permakultur-Funktion</span><span class="detail-chip">Sound-Art aus lokalen Naturklängen generiert</span><span class="detail-chip">Myko-Skulptur (lebende Pilz-Installationen)</span><span class="detail-chip">Temporäre Holz-Architektur (2-5 Jahre Lebensdauer)</span><span class="detail-chip">Partizipative Ritual-Objekte</span><span class="detail-chip">Hydrologische Kunst (Wasserlauf-Interventionen)</span></div>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 14px;">
+          7 permanente Werke · Rotierende Biennale · Besucher dürfen berühren, betreten, nutzen – tragen zu Pflege bei (z.B. Pilze ernten, Regenwasser umleiten), fotografieren nur mit Erlaubnis, keine Wegmarkierungen nur intuitive Pfade
+        </p>
+      </div>
+    </div>
+
+    <div class="rhythm-wrap">
+      <div class="rhythm-title">Festival-Rhythmus · atmend, nicht dauerlaut</div>
+      <div class="rhythm-grid">
+        <div class="rhythm-cell"><strong>TÄGLICH</strong><span>Sauna 16-20 Uhr, Bibliotheks-Turm 9-18 Uhr, Wald-Ausstellung immer zugänglich, Feuer-Ring selbst aktiviert ab 18 Uhr (Holz bereitgestellt)</span></div>
+        <div class="rhythm-cell"><strong>WÖCHENTLICH</strong><span>Samstag 14-17 Uhr: Öffentliche Skill-Demos in der Kathedrale, Sonntag Morgen: stille Waldführung ohne Sprechen</span></div>
+        <div class="rhythm-cell"><strong>MONATLICH</strong><span>Vollmond-Werkstatt: eine Nacht lang offene Werkstätten, Feuer-Ring-Geschichten, Sauna-Marathon, nur für Wiederkehrende + 30 neue</span></div>
+        <div class="rhythm-cell"><strong>JÄHRLICH</strong><span>MINE-BIENNALE im September: 4 Tage, neue Installations-Eröffnungen, 8 internationale Künstler, 400 geladene Gäste, Skill-Olympiade mit Meister-Demonstrationen</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- LAYER 3: DEPTH -->
-<section id="layer3">
-  <div class="layer-label">Schicht 03 · Tiefe</div>
+<!-- LAYER 4: TIEFE (FULL ENGINE ANALYSIS) -->
+<section id="layer4">
+  <div class="layer-label">Schicht 04 · Tiefe</div>
   <h2 class="layer-title">Die <strong>volle Engine-Analyse</strong></h2>
 
   <div class="depth-intro">
@@ -575,8 +1141,8 @@ body.unlocked .depth-switch { opacity: 1; }
   </div>
 
   <div class="depth-sections">
-    <div class="depth-section from-left">
-      <h2>↯ Synthese</h2>
+    <div class="depth-section will-animate">
+      <h2 class="section-kicker">↯ Synthese</h2>
       <div class="sub">Die integrierte Vision</div>
       <h2>SYNTHESE: REGENERATIVE MINE TRANSFORMATION</h2>
 <h2>Verdichtete Vision</h2>
@@ -722,8 +1288,8 @@ body.unlocked .depth-switch { opacity: 1; }
 </ul>
     </div>
 
-    <div class="depth-section from-right">
-      <h2>⚫ Shadow</h2>
+    <div class="depth-section will-animate">
+      <h2 class="section-kicker">⚫ Shadow</h2>
       <div class="sub">Die verdrängten Aspekte</div>
       <h2>SHADOWWORK-ENGINE: Tiefenanalyse der Minenpark-Vision</h2>
 <h2>⚫ SCHATTEN 1: <strong>&quot;Der Goldrausch-Wiederholungszwang&quot;</strong></h2>
@@ -784,8 +1350,8 @@ body.unlocked .depth-switch { opacity: 1; }
 </ul>
     </div>
 
-    <div class="depth-section from-left">
-      <h2>⚡ Gegenpol</h2>
+    <div class="depth-section will-animate">
+      <h2 class="section-kicker">⚡ Gegenpol</h2>
       <div class="sub">Der härteste Einspruch</div>
       <h2>GEGENPOL-STIMME: Maximal-Einspruch</h2>
 <h2>1. DER FUNDAMENTALE FEHLER IM DESIGN</h2>
@@ -842,8 +1408,8 @@ body.unlocked .depth-switch { opacity: 1; }
 </ol>
     </div>
 
-    <div class="depth-section from-right">
-      <h2>◐ Kairos · Timing</h2>
+    <div class="depth-section will-animate">
+      <h2 class="section-kicker">◐ Kairos · Timing</h2>
       <div class="sub">Warum jetzt, in welcher Reihenfolge</div>
       <h2>KAIROS-ENGINE: TIMING-ANALYSE 2026</h2>
 <h2>&quot;Mine-to-Experience&quot;-Transformationsfenster</h2>
@@ -910,11 +1476,11 @@ body.unlocked .depth-switch { opacity: 1; }
 </ul>
     </div>
 
-    <div class="depth-section">
-      <h2>◆ 6-Persona-Panel</h2>
+    <div class="depth-section will-animate">
+      <h2 class="section-kicker">◆ 6-Persona-Panel</h2>
       <div class="sub">Sechs unabhängige Perspektiven</div>
       
-    <div class="persona-card reveal">
+    <div class="persona-card">
       <h3>Extraktiv-Ökonom</h3>
       <p class="persona-role"><em>Denke wie ein Volkswirt mit Fokus auf Staatsrente und BIP-Hebel. Wo fliesst Geld wirklich hin, wer verliert, welche Fiskalregel maximiert lokalen Wertschöpfungsanteil?</em></p>
       <h2>EXTRAKTIV-ÖKONOMISCHE ANALYSE</h2>
@@ -965,7 +1531,7 @@ body.unlocked .depth-switch { opacity: 1; }
 <p><strong>FAZIT</strong>: Vision hat Potenzial, wenn Staat die Rente VORWEG sichert und Wert</p>
     </div>
     
-    <div class="persona-card reveal">
+    <div class="persona-card">
       <h3>Indigene Landrechtsanwältin</h3>
       <p class="persona-role"><em>Denke wie eine Anwältin für First Nations / lokale Gemeinschaften. Wo droht Kolonialmuster 2.0, was ist FPIC (Free Prior Informed Consent), wie wird aus Beteiligung Ownership?</em></p>
       <h2>Perspektive: Indigene Landrechtsanwältin</h2>
@@ -1003,7 +1569,7 @@ body.unlocked .depth-switch { opacity: 1; }
 <p><strong>Zusammengefasst</strong>: Ohne Landrechtsrückgabe, Mehrheits-Ownership und Abschaffung des „Finders-keepers&quot; ist dies Kolonialismus mit Instagram-Filter.</p>
     </div>
     
-    <div class="persona-card reveal">
+    <div class="persona-card">
       <h3>Bergbau-Geologe</h3>
       <p class="persona-role"><em>Denke wie ein pensionierter Minen-Geologe. Welche Minen eignen sich, welche Safety-Protokolle sind nicht-verhandelbar, was ist Salting-Betrugsrisiko, was realer Yield?</em></p>
       <h2>Perspektive: Pensionierter Minen-Geologe (37 Jahre Erfahrung, davon 12 in Westafrika, 18 in Australien, 7 in Kanada)</h2>
@@ -1046,7 +1612,7 @@ body.unlocked .depth-switch { opacity: 1; }
 <p><strong>Bonuswarnung aus Erfahrung:</strong> Die größte Gefahr ist nicht technischer, sondern sozialer Natur – &quot;goldrausch-Psychologie&quot; zerstört</p>
     </div>
     
-    <div class="persona-card reveal">
+    <div class="persona-card">
       <h3>Tourismus-Ops-Manager</h3>
       <p class="persona-role"><em>Denke wie ein Disney-Imagineer + Iceland-Tourism-Board. Besucherfluss, Storytelling, Kapazitätsgrenzen, Off-Season-Problem, wie aus Park eine Marke wird.</em></p>
       <h2>TOURISMUS-OPS-ANALYSE: „MINE TO SHINE&quot;</h2>
@@ -1092,7 +1658,7 @@ body.unlocked .depth-switch { opacity: 1; }
 </ul>
     </div>
     
-    <div class="persona-card reveal">
+    <div class="persona-card">
       <h3>Dorf-Bürgermeisterin</h3>
       <p class="persona-role"><em>Denke wie eine Bürgermeisterin einer 800-Seelen-Gemeinde am Minenrand. Was BRAUCHT mein Dorf wirklich — Schule, Arzt, Glasfaser, Bus? Wie verhindere ich, dass nur 5 Familien profitieren?</em></p>
       <h2>Perspektive: Bürgermeisterin, 800-Seelen-Gemeinde am Minenrand</h2>
@@ -1135,7 +1701,7 @@ body.unlocked .depth-switch { opacity: 1; }
 </ul>
     </div>
     
-    <div class="persona-card reveal">
+    <div class="persona-card">
       <h3>ESG/Regenerativ-Strategin</h3>
       <p class="persona-role"><em>Denke wie eine Regenerative-Economy-Denkerin (Kate Raworth Donut). Wie wird aus extraktiver Wunde ein regeneratives Kreislauf-System, wo ist Biodiversität-Uplift Teil des KPIs?</em></p>
       <h2>ESG/Regenerativ-Strategin – Analyse</h2>
@@ -1191,6 +1757,8 @@ body.unlocked .depth-switch { opacity: 1; }
       <span class="engine-tag">SIGNAL</span>
       <span class="engine-tag">MID</span>
       <span class="engine-tag">CHOREO</span>
+      <span class="engine-tag">SOIL</span>
+      <span class="engine-tag">FESTIVAL</span>
     </div>
   </footer>
 </section>
@@ -1210,8 +1778,6 @@ function tryUnlock() {
   } else {
     err.classList.add('show');
     pw.value = '';
-    pw.style.animation = 'none';
-    setTimeout(() => { pw.style.animation = 'shake 0.4s ease'; }, 10);
   }
 }
 
@@ -1227,52 +1793,43 @@ try {
   }
 } catch(e) {}
 
-const shakeCSS = document.createElement('style');
-shakeCSS.textContent = '@keyframes shake { 0%,100% {transform:translateX(0);} 25% {transform:translateX(-8px);} 75% {transform:translateX(8px);} }';
-document.head.appendChild(shakeCSS);
-
-// ============ INTERSECTION OBSERVER ============
+// ============ LAYER 4 REVEAL FALLBACK (IntersectionObserver) ============
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('in-view');
+    if (e.isIntersecting) e.target.classList.add('visible');
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+}, { threshold: 0.08, rootMargin: '0px 0px 0px 0px' });
 
-document.querySelectorAll('.principle-card, .phase-item, .metric-hero, .depth-section, .persona-card')
-  .forEach(el => io.observe(el));
+document.querySelectorAll('.will-animate').forEach(el => io.observe(el));
 
-// ============ LAYER INDICATOR ============
+// Safety fallback: after 2.5s make all visible regardless
+setTimeout(() => {
+  document.querySelectorAll('.will-animate').forEach(el => el.classList.add('visible'));
+}, 2500);
+
+// ============ LAYER INDICATOR + DEPTH SWITCH ============
 const dots = document.querySelectorAll('.li-dot');
 const buttons = document.querySelectorAll('.depth-btn');
-const sections = ['layer1', 'layer2', 'layer3'].map(id => document.getElementById(id));
+const sections = ['layer1', 'layer2', 'layer3', 'layer4'].map(id => document.getElementById(id));
 
 function updateIndicator() {
   const midY = window.scrollY + window.innerHeight / 2;
   let active = 0;
   sections.forEach((s, i) => {
-    if (s.offsetTop <= midY) active = i;
+    if (s && s.offsetTop <= midY) active = i;
   });
   dots.forEach((d, i) => d.classList.toggle('active', i === active));
   buttons.forEach((b, i) => b.classList.toggle('active', i === active));
 }
 window.addEventListener('scroll', updateIndicator, { passive: true });
 
-dots.forEach(d => d.addEventListener('click', () => {
-  document.getElementById(d.dataset.target).scrollIntoView({ behavior: 'smooth' });
-}));
-buttons.forEach(b => b.addEventListener('click', () => {
-  document.getElementById(b.dataset.target).scrollIntoView({ behavior: 'smooth' });
-}));
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-// ============ SIGNATURE MOTION: spiral emergence on hover ============
-document.querySelectorAll('.principle-card').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    card.style.animation = 'none';
-    requestAnimationFrame(() => {
-      card.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.6s ease';
-    });
-  });
-});
+dots.forEach(d => d.addEventListener('click', () => scrollToSection(d.dataset.target)));
+buttons.forEach(b => b.addEventListener('click', () => scrollToSection(b.dataset.target)));
 </script>
 </body>
 </html>
